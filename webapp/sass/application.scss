@@ -1,0 +1,10 @@
+// Import the theme
+@import "../node_modules/ubuntu-vanilla-theme/scss/theme";
+// Run the theme
+@include ubuntu-vanilla-theme;
+
+
+// Customise theme
+footer div {
+	padding-left: 10px;
+}

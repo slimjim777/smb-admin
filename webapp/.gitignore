@@ -1,0 +1,8 @@
+*.swp
+.coverage
+*.log
+node_modules
+tags
+.tags
+coverage/
+build
