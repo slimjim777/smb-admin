@@ -61,13 +61,10 @@ func ReadConfig(config *ConfigSettings) error {
 	}
 
 	// Override the config from the environment variables
-	err := readConfigFromEnvironment(config)
-	if err != nil {
-		return err
-	}
+	readConfigFromEnvironment(config)
 
 	// Verify the config
-	err = verifyConfig(config)
+	err := verifyConfig(config)
 	if err != nil {
 		return err
 	}
@@ -94,30 +91,29 @@ func readConfigFromFile(config *ConfigSettings) error {
 }
 
 // readConfigFromEnvironment overrides the config file parameters with the environment variables
-func readConfigFromEnvironment(config *ConfigSettings) error {
+func readConfigFromEnvironment(config *ConfigSettings) {
 	log.Println("Read config from environment variables")
 
 	// Set the title from the environment variable, if it is set
-	if os.Getenv("SMBADMIN_TITLE") != "" {
-		config.Title = os.Getenv("SMBADMIN_TITLE")
+	if os.Getenv(envTitle) != "" {
+		config.Title = os.Getenv(envTitle)
 	}
 
 	// Set the logo from the environment variable, if it is set
-	if os.Getenv("SMBADMIN_LOGO") != "" {
-		config.Logo = os.Getenv("SMBADMIN_LOGO")
+	if os.Getenv(envLogo) != "" {
+		config.Logo = os.Getenv(envLogo)
 	}
 
 	// Set the document root from the environment variable, if it is set
-	if os.Getenv("SMBADMIN_DOCROOT") != "" {
-		config.DocRoot = os.Getenv("SMBADMIN_DOCROOT")
+	if os.Getenv(envDocRoot) != "" {
+		config.DocRoot = os.Getenv(envDocRoot)
 	}
 
 	// Set the port from the environment variable, if it is set
-	if os.Getenv("SMBADMIN_PORT") != "" {
-		config.Port = os.Getenv("SMBADMIN_PORT")
+	if os.Getenv(envPort) != "" {
+		config.Port = os.Getenv(envPort)
 	}
 
-	return nil
 }
 
 func verifyConfig(config *ConfigSettings) error {

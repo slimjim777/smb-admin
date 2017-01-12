@@ -20,7 +20,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -39,9 +38,8 @@ func main() {
 		log.Fatalf("Error reading the config: %v", err)
 	}
 
-	fmt.Println("server will run on:", env.Config.Port)
+	log.Println("Server will run on:", env.Config.Port)
 	port := ":" + env.Config.Port
-	log.Println(env.Config)
 
 	log.Fatal(http.ListenAndServe(port, service.AdminRouter(&env)))
 }

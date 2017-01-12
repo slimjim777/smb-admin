@@ -70,3 +70,35 @@ func TestVersionHandlerNilEnviron(t *testing.T) {
 	}
 
 }
+
+func TestIndexHandler(t *testing.T) {
+
+	indexTemplate = "../static/app.html"
+
+	config := ConfigSettings{Title: "Site Title", Logo: "/url"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/", nil)
+	http.HandlerFunc(IndexHandler).ServeHTTP(w, r)
+
+	if w.Code != http.StatusOK {
+		t.Errorf("Expected status %d, got: %d", http.StatusOK, w.Code)
+	}
+}
+
+func TestIndexHandlerInvalidTemplate(t *testing.T) {
+
+	indexTemplate = "../static/does_not_exist.html"
+
+	config := ConfigSettings{Title: "Site Title", Logo: "/url"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/", nil)
+	http.HandlerFunc(IndexHandler).ServeHTTP(w, r)
+
+	if w.Code != http.StatusInternalServerError {
+		t.Errorf("Expected status %d, got: %d", http.StatusInternalServerError, w.Code)
+	}
+}

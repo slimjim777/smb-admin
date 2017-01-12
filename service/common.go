@@ -23,12 +23,20 @@ package service
 const (
 	defaultConfigFile      = ""
 	defaultConfigFileUsage = "Path to the config file"
-	defaultPort            = ":8000"
-	defaultPortUsage       = "default server port, ':80', ':8080'..."
+	defaultPort            = "8000"
+	defaultPortUsage       = "default server port e.g. '8000'"
 
 	defaultTitle   = "SMB Admin"
 	defaultLogo    = "/static/images/logo-ubuntu-white.svg"
 	defaultDocRoot = "."
+)
+
+// Environment variables that will be checked
+const (
+	envTitle   = "SMBADMIN_TITLE"
+	envLogo    = "SMBADMIN_LOGO"
+	envDocRoot = "SMBADMIN_DOCROOT"
+	envPort    = "SMBADMIN_PORT"
 )
 
 const version = "0.1"
