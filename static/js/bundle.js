@@ -85,7 +85,7 @@ var App = React.createClass({
 							React.createElement(
 								'span',
 								null,
-								M({ id: "title" })
+								TITLE
 							)
 						)
 					),
@@ -213,7 +213,7 @@ var Index = React.createClass({
         React.createElement(
           'h2',
           null,
-          M({ id: 'title' })
+          TITLE
         ),
         React.createElement(
           'div',

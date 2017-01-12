@@ -30,7 +30,7 @@ var Index = React.createClass({
           <Navigation active="home" />
 
           <section className="row no-border">
-            <h2>{M({id: 'title'})}</h2>
+            <h2>{TITLE}</h2>
             <div>
               <div className="box">
                 {M({id: 'description'})}

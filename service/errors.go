@@ -17,31 +17,8 @@
  *
  */
 
-package main
+package service
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-
-	"github.com/ubuntu-core/smb-admin/service"
+const (
+	errorPortNotNumeric = "The 'port' must be an integer"
 )
-
-func main() {
-	env := service.Env{Config: service.DefaultConfig()}
-
-	// Parse the command-line parameters
-	service.ParseArgs()
-
-	// Get the config settings from the file or environment variables
-	err := service.ReadConfig(&env.Config)
-	if err != nil {
-		log.Fatalf("Error reading the config: %v", err)
-	}
-
-	fmt.Println("server will run on:", env.Config.Port)
-	port := ":" + env.Config.Port
-	log.Println(env.Config)
-
-	log.Fatal(http.ListenAndServe(port, service.AdminRouter(&env)))
-}

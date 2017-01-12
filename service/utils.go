@@ -20,16 +20,17 @@
 package service
 
 import (
+	"errors"
 	"flag"
 	"io/ioutil"
 	"log"
 	"os"
+	"strconv"
 
 	"gopkg.in/yaml.v2"
 )
 
 var settingsFile string
-var port string
 
 // DefaultConfig returns the default config settings
 func DefaultConfig() ConfigSettings {
@@ -45,7 +46,6 @@ func DefaultConfig() ConfigSettings {
 // ParseArgs checks the command line arguments
 func ParseArgs() {
 	flag.StringVar(&settingsFile, "config", defaultConfigFile, defaultConfigFileUsage)
-	flag.StringVar(&port, "port", "", defaultPortUsage)
 	flag.Parse()
 }
 
@@ -58,11 +58,18 @@ func ReadConfig(config *ConfigSettings) error {
 		if err != nil {
 			return err
 		}
-	} else {
-		err := readConfigFromEnvironment(config)
-		if err != nil {
-			return err
-		}
+	}
+
+	// Override the config from the environment variables
+	err := readConfigFromEnvironment(config)
+	if err != nil {
+		return err
+	}
+
+	// Verify the config
+	err = verifyConfig(config)
+	if err != nil {
+		return err
 	}
 
 	return nil
@@ -86,13 +93,37 @@ func readConfigFromFile(config *ConfigSettings) error {
 	return nil
 }
 
-// readConfigFromEnvironment overrides the command-line parameters with the environment variables
+// readConfigFromEnvironment overrides the config file parameters with the environment variables
 func readConfigFromEnvironment(config *ConfigSettings) error {
 	log.Println("Read config from environment variables")
 
-	// Set the port from the environment variables, if it is not set
-	if port == "" && os.Getenv("SMBADMIN_PORT") != "" {
+	// Set the title from the environment variable, if it is set
+	if os.Getenv("SMBADMIN_TITLE") != "" {
+		config.Title = os.Getenv("SMBADMIN_TITLE")
+	}
+
+	// Set the logo from the environment variable, if it is set
+	if os.Getenv("SMBADMIN_LOGO") != "" {
+		config.Logo = os.Getenv("SMBADMIN_LOGO")
+	}
+
+	// Set the document root from the environment variable, if it is set
+	if os.Getenv("SMBADMIN_DOCROOT") != "" {
+		config.DocRoot = os.Getenv("SMBADMIN_DOCROOT")
+	}
+
+	// Set the port from the environment variable, if it is set
+	if os.Getenv("SMBADMIN_PORT") != "" {
 		config.Port = os.Getenv("SMBADMIN_PORT")
+	}
+
+	return nil
+}
+
+func verifyConfig(config *ConfigSettings) error {
+	// Check that the port is numeric
+	if _, err := strconv.Atoi(config.Port); err != nil {
+		return errors.New(errorPortNotNumeric)
 	}
 
 	return nil

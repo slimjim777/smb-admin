@@ -1,0 +1,9 @@
+# Site details
+title: "SMB Admin"
+logo: "/static/images/logo-ubuntu-white.svg"
+
+# Path to the assets (${docRoot}/static)
+docRoot: "."
+
+# Network port for the service
+port: "8000"
