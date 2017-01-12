@@ -1,0 +1,6 @@
+*.swp
+.coverage
+*.log
+tags
+.tags
+coverage/
