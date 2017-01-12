@@ -14,26 +14,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-'use strict';
+'use strict'
 
-var intlData = {
-    en: {
-        description: "Admin interface to manage the SMB Server",
-        home: "Home",
-        title: "SMB Admin",
-        version: "Version",
+var Constants = {
+    SERVICES: [
+        'nextcloud', 'serialvault'
+    ],
 
-        services: "Services",
-        serviceName: "Name",
-        serviceDesc: "Description",
-        serviceState: "Status",
+    nextcloudService: "snap.nextcloud.nextcloud.service",
+    serialvaultService: "snap.serial-vault.serial-vault.service",
+}
 
-        nextcloud: "NextCloud",
-        nextcloudDesc: "A safe home for your data. Access, share and protect your files, calendars, contacts, communication & more at home and in your enterprise.",
-
-        serialvault: "Serial Vault",
-        serialvaultDesc: "A vault for your serials."
-    }
-};
-
-module.exports = intlData;
+module.exports = Constants;

@@ -20,11 +20,15 @@ var React = require('react');
 var Navigation = require('./Navigation');
 var Footer = require('./Footer');
 var injectIntl = require('react-intl').injectIntl;
+var services = require('./constants').SERVICES;
+
 
 var Index = React.createClass({
 
   render: function() {
     var M = this.props.intl.formatMessage;
+    var self = this;
+
     return (
         <div className="inner-wrapper">
           <Navigation active="home" />
@@ -36,6 +40,26 @@ var Index = React.createClass({
                 {M({id: 'description'})}
               </div>
             </div>
+          </section>
+
+          <section className="row no-border">
+            <h3>{M({id: 'services'})}</h3>
+            <table>
+              <thead>
+                <tr><th>{M({id: 'serviceName'})}</th><th>{M({id: 'serviceDesc'})}</th><th>{M({id: 'serviceState'})}</th></tr>
+              </thead>
+              <tbody>
+                {services.map(function(srv) {
+                  return (
+                    <tr>
+                      <td>{M({id: srv})}</td>
+                      <td>{M({id: srv + 'Desc'})}</td>
+                      <td></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           </section>
 
           <Footer />
