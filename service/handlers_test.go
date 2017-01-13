@@ -102,3 +102,21 @@ func TestIndexHandlerInvalidTemplate(t *testing.T) {
 		t.Errorf("Expected status %d, got: %d", http.StatusInternalServerError, w.Code)
 	}
 }
+
+func TestStatesHandler(t *testing.T) {
+
+	config := ConfigSettings{Version: "1.2.5"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/v1/servicestates", nil)
+	AdminRouter(Environ).ServeHTTP(w, r)
+
+	// Check the JSON response
+	result := StatesResponse{}
+	err := json.NewDecoder(w.Body).Decode(&result)
+	if err != nil {
+		t.Errorf("Error decoding the states response: %v", err)
+	}
+
+}

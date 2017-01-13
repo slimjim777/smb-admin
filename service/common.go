@@ -19,28 +19,6 @@
 
 package service
 
-// Command-line parameter defaults and descriptions
-const (
-	defaultConfigFile      = ""
-	defaultConfigFileUsage = "Path to the config file"
-	defaultPort            = "8000"
-	defaultPortUsage       = "default server port e.g. '8000'"
-
-	defaultTitle   = "SMB Admin"
-	defaultLogo    = "/static/images/logo-ubuntu-white.svg"
-	defaultDocRoot = "."
-)
-
-// Environment variables that will be checked
-const (
-	envTitle   = "SMBADMIN_TITLE"
-	envLogo    = "SMBADMIN_LOGO"
-	envDocRoot = "SMBADMIN_DOCROOT"
-	envPort    = "SMBADMIN_PORT"
-)
-
-const version = "0.1"
-
 // ConfigSettings defines the parsed config file settings.
 type ConfigSettings struct {
 	Version string
@@ -53,4 +31,10 @@ type ConfigSettings struct {
 // Env environment struct that holds the config details.
 type Env struct {
 	Config ConfigSettings
+}
+
+// ActiveState is the current state of a service
+type ActiveState struct {
+	Name  string `json:"name"`
+	State string `json:"state"`
 }

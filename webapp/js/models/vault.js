@@ -17,10 +17,15 @@
 'use strict'
 var Ajax = require('./Ajax');
 
+
 var Vault = {
 
 	version: function () {
-			return Ajax.get('version');
+		return Ajax.get('version');
+	},
+
+	serviceStates: function() {
+		return Ajax.get('servicestates');
 	}
 }
 

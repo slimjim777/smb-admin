@@ -21,13 +21,46 @@ var Navigation = require('./Navigation');
 var Footer = require('./Footer');
 var injectIntl = require('react-intl').injectIntl;
 var services = require('./constants').SERVICES;
+var Vault = require('../models/vault');
 
 
 var Index = React.createClass({
 
+  getInitialState: function() {
+    return {serviceState: {}, message: null};
+  },
+
+  componentDidMount: function() {
+    this.getStates();
+  },
+
+  getStates: function() {
+    var self = this;
+    Vault.serviceStates().then(function(response) {
+      var data = JSON.parse(response.body);
+
+      if (!data.success) {
+        message = data.message;
+        self.setState({message: data.message});
+        return;
+      }
+
+      // Pivot the data to make it more accessible
+      var serviceState = {};
+      console.log(data.states);
+      data.states.map(function(srv) {
+        serviceState[srv.name] = srv.state;
+      });
+      self.setState({serviceState: serviceState, message: null});
+      
+    });
+  },
+
   render: function() {
     var M = this.props.intl.formatMessage;
     var self = this;
+
+    console.log(self.state.serviceState);
 
     return (
         <div className="inner-wrapper">
@@ -54,7 +87,7 @@ var Index = React.createClass({
                     <tr>
                       <td>{M({id: srv})}</td>
                       <td>{M({id: srv + 'Desc'})}</td>
-                      <td></td>
+                      <td>{self.state.serviceState[srv]}</td>
                     </tr>
                   )
                 })}

@@ -25,12 +25,21 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os/exec"
 	"strings"
 )
 
 // VersionResponse is the JSON response from the API Version method
 type VersionResponse struct {
 	Version string `json:"version"`
+}
+
+// StatesResponse is the JSON response from the API State method
+type StatesResponse struct {
+	Success bool          `json:"success"`
+	Code    string        `json:"code"`
+	Message string        `json:"message"`
+	States  []ActiveState `json:"states"`
 }
 
 // VersionHandler is the API method to return the version of the service
@@ -61,5 +70,37 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	err = t.Execute(w, page)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// StatesHandler returns the active state of the SMB services
+func StatesHandler(w http.ResponseWriter, r *http.Request) {
+	states := []ActiveState{}
+
+	// Find the active state of each of the services
+	for index, srv := range serviceKeys {
+
+		out, err := exec.Command("systemctl", "show", "-p", "ActiveState", serviceNames[index]).Output()
+		if err != nil {
+			log.Println(err)
+			response := StatesResponse{Success: false, Code: "error-state", Message: err.Error(), States: states}
+			if err := json.NewEncoder(w).Encode(response); err != nil {
+				log.Println("Error forming the states response.")
+			}
+			return
+		}
+
+		// Reformat the response from the current format: "ActiveState=active\n"
+		currentState := strings.TrimPrefix(string(out), "ActiveState=")
+		currentState = strings.TrimSuffix(string(currentState), "\n")
+
+		state := ActiveState{Name: srv, State: currentState}
+		states = append(states, state)
+	}
+
+	response := StatesResponse{Success: true, States: states}
+	// Encode the response as JSON
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Println("Error forming the states response.")
 	}
 }

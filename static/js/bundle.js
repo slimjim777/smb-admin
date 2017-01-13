@@ -197,14 +197,46 @@ var Navigation = require('./Navigation');
 var Footer = require('./Footer');
 var injectIntl = require('react-intl').injectIntl;
 var services = require('./constants').SERVICES;
+var Vault = require('../models/vault');
 
 var Index = React.createClass({
   displayName: 'Index',
 
 
+  getInitialState: function getInitialState() {
+    return { serviceState: {}, message: null };
+  },
+
+  componentDidMount: function componentDidMount() {
+    this.getStates();
+  },
+
+  getStates: function getStates() {
+    var self = this;
+    Vault.serviceStates().then(function (response) {
+      var data = JSON.parse(response.body);
+
+      if (!data.success) {
+        message = data.message;
+        self.setState({ message: data.message });
+        return;
+      }
+
+      // Pivot the data to make it more accessible
+      var serviceState = {};
+      console.log(data.states);
+      data.states.map(function (srv) {
+        serviceState[srv.name] = srv.state;
+      });
+      self.setState({ serviceState: serviceState, message: null });
+    });
+  },
+
   render: function render() {
     var M = this.props.intl.formatMessage;
     var self = this;
+
+    console.log(self.state.serviceState);
 
     return React.createElement(
       'div',
@@ -279,7 +311,11 @@ var Index = React.createClass({
                   null,
                   M({ id: srv + 'Desc' })
                 ),
-                React.createElement('td', null)
+                React.createElement(
+                  'td',
+                  null,
+                  self.state.serviceState[srv]
+                )
               );
             })
           )
@@ -291,7 +327,7 @@ var Index = React.createClass({
 });
 
 module.exports = injectIntl(Index);
-},{"./Footer":2,"./Navigation":4,"./constants":5,"react":"CwoHg3","react-intl":221}],4:[function(require,module,exports){
+},{"../models/vault":9,"./Footer":2,"./Navigation":4,"./constants":5,"react":"CwoHg3","react-intl":221}],4:[function(require,module,exports){
 /*
  * Copyright (C) 2017-2018 Canonical Ltd
  *
@@ -582,6 +618,10 @@ var Vault = {
 
   version: function version() {
     return Ajax.get('version');
+  },
+
+  serviceStates: function serviceStates() {
+    return Ajax.get('servicestates');
   }
 };
 

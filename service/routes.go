@@ -45,6 +45,7 @@ func AdminRouter(env *Env) *mux.Router {
 
 	// API routes
 	router.Handle("/v1/version", Middleware(http.HandlerFunc(VersionHandler), env)).Methods("GET")
+	router.Handle("/v1/servicestates", Middleware(http.HandlerFunc(StatesHandler), env)).Methods("GET")
 
 	// Web application routes
 	path := []string{env.Config.DocRoot, "/static/"}
