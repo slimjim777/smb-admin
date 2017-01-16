@@ -1,5 +1,5 @@
 [![Build Status][travis-image]][travis-url]
-# Small Business Admin Interface
+# Small/Medium Business Admin Interface
 
-Admin interface for the Small Business server
+Admin interface for the Small/Medium Business server
 
