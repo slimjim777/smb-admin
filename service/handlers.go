@@ -25,8 +25,9 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"os/exec"
 	"strings"
+
+	"gopkg.in/pipe.v2"
 )
 
 // VersionResponse is the JSON response from the API Version method
@@ -80,19 +81,25 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 	// Find the active state of each of the services
 	for index, srv := range serviceKeys {
 
-		out, err := exec.Command("systemctl", "show", "-p", "ActiveState", serviceNames[index]).Output()
+		// This would be the best option, but we don't have permissions to use systemctl
+		//out, err := exec.Command("systemctl", "show", "-p", "ActiveState", serviceNames[index]).Output()
+
+		// Use 'ps' and 'grep' to find if the service is running
+		p := pipe.Line(
+			pipe.Exec("ps", "-eo", "tty,comm"),
+			pipe.Exec("grep", serviceNames[index]),
+		)
+
+		output, err := pipe.CombinedOutput(p)
 		if err != nil {
-			log.Println(err)
-			response := StatesResponse{Success: false, Code: "error-state", Message: err.Error(), States: states}
-			if err := json.NewEncoder(w).Encode(response); err != nil {
-				log.Println("Error forming the states response.")
-			}
-			return
+			log.Printf("Service '%s' is not running: %v\n", serviceNames[index], err)
 		}
 
-		// Reformat the response from the current format: "ActiveState=active\n"
-		currentState := strings.TrimPrefix(string(out), "ActiveState=")
-		currentState = strings.TrimSuffix(string(currentState), "\n")
+		// Determine the running state of the service
+		var currentState = ""
+		if len(string(output)) > 0 {
+			currentState = "running"
+		}
 
 		state := ActiveState{Name: srv, State: currentState}
 		states = append(states, state)

@@ -42,7 +42,8 @@ const (
 const version = "0.1"
 
 // serviceKeys defines the key names of each of the services
-var serviceKeys = [...]string{"nextcloud", "serialvault"}
+var serviceKeys = [...]string{"nextcloud", "ssh"}
 
 // serviceNames defines the snapped service names of the services
-var serviceNames = [...]string{"snap.nextcloud.nextcloud.service", "snap.serial-vault.serial-vault.service"}
+//var serviceNames = [...]string{"snap.nextcloud.nextcloud.service", "ssh.service"}
+var serviceNames = [...]string{"nextcloud", "sshd"}

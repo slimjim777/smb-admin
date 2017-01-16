@@ -18,11 +18,11 @@
 
 var Constants = {
     SERVICES: [
-        'nextcloud', 'serialvault'
+        'nextcloud', 'ssh'
     ],
 
     nextcloudService: "snap.nextcloud.nextcloud.service",
-    serialvaultService: "snap.serial-vault.serial-vault.service",
+    sshService: "ssh.service",
 }
 
 module.exports = Constants;

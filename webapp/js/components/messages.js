@@ -31,8 +31,8 @@ var intlData = {
         nextcloud: "NextCloud",
         nextcloudDesc: "A safe home for your data. Access, share and protect your files, calendars, contacts, communication & more at home and in your enterprise.",
 
-        serialvault: "Serial Vault",
-        serialvaultDesc: "A vault for your serials."
+        ssh: "Secure Shell Server",
+        sshDesc: "It encrypts all traffic to eliminate eavesdropping, connection hijacking, and other attacks. In addition, OpenSSH provides a large suite of secure tunneling capabilities, several authentication methods, and sophisticated configuration options."
     }
 };
 
