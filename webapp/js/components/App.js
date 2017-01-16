@@ -57,7 +57,6 @@ var App = React.createClass({
 				    <div className="logo">
 				      <a className="logo-ubuntu" href="/">
 				        <img width="106" height="25" src={LOGO} alt="" />
-				        <span>{TITLE}</span>
 				      </a>
 				    </div>
 						<div>

@@ -18,11 +18,8 @@
 
 var Constants = {
     SERVICES: [
-        'nextcloud', 'ssh'
-    ],
-
-    nextcloudService: "snap.nextcloud.nextcloud.service",
-    sshService: "ssh.service",
+        "snapweb", "nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"
+    ]
 }
 
 module.exports = Constants;

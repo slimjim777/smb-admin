@@ -22,17 +22,34 @@ var intlData = {
         home: "Home",
         title: "SMB Admin",
         version: "Version",
+        running: "Running",
+        not_running: "Not Running",
 
-        services: "Services",
-        serviceName: "Name",
-        serviceDesc: "Description",
-        serviceState: "Status",
+        nextcloud: "Nextcloud",
+        nextcloudDesc: "Nextcloud is a safe home for all your data. Access, share and protect your files, calendars, contacts and communication and more. Nextcloud comes with a feature rich set of pre-integrated services and is developed using a fully open source platform designed to give enterprises full control and privacy.",
 
-        nextcloud: "NextCloud",
-        nextcloudDesc: "A safe home for your data. Access, share and protect your files, calendars, contacts, communication & more at home and in your enterprise.",
+        snapweb: "Snapweb",
+        snapDesc: "Administration interface for Ubuntu Core.",
 
-        ssh: "Secure Shell Server",
-        sshDesc: "It encrypts all traffic to eliminate eavesdropping, connection hijacking, and other attacks. In addition, OpenSSH provides a large suite of secure tunneling capabilities, several authentication methods, and sophisticated configuration options."
+        wekan: "Wekan",
+        wekanDesc: "Wekan is an open source Kanban workflow tool that allows you to create boards, on which cards can be moved around between a number of columns. Boards can have many members, allowing for easy collaboration, just add everyone that should be able to work with you on the board to it, and you are good to go!",
+
+        rocketchat: "Rocket.Chat",
+        rocketchatDesc: "Rocket.Chat is a dynamic and innovative toolkit providing group messaging and video communication and collaboration. It is a great solution for communities and companies wanting to privately host their own chat service.",
+
+        gogs: "Go Git Service",
+        gogsDesc: "Gogs is a easy to use code repository service based on Git designed for self hosted environments. Gogs provides a full code management and distribution and is designed to help developers accelerate projects within a fully private environment.",
+
+        spreed: "Spreed",
+        spreedDesc: "Spreed is a private video and chat messaging service based on WebRTC and is available through Nextcloud. The service brings you easy to use web conferencing, one to one calls, chat and is designed to give the enterprise full control of its communication.",
+
+        iredmail: "iRedMail",
+        iredmailDesc: "Iredmail is the complete self-hosted, open source mail server solution for enterprises. With iRedMail, you can deploy a full feature mail server in several minutes.",
+
+        collabora: "Collabora",
+        collaboraDesc: "Collaborative editing with LibreOffice using your own private cloud. Collabora Online is for enterprises that want a powerful self-hosted office suite that protects their privacy and allows them to keep full control of their sensitive corporate data.",
+
+        
     }
 };
 

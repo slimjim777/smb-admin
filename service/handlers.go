@@ -96,7 +96,7 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Determine the running state of the service
-		var currentState = ""
+		var currentState = "not_running"
 		if len(string(output)) > 0 {
 			currentState = "running"
 		}

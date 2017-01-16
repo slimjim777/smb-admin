@@ -81,12 +81,7 @@ var App = React.createClass({
 						React.createElement(
 							'a',
 							{ className: 'logo-ubuntu', href: '/' },
-							React.createElement('img', { width: '106', height: '25', src: LOGO, alt: '' }),
-							React.createElement(
-								'span',
-								null,
-								TITLE
-							)
+							React.createElement('img', { width: '106', height: '25', src: LOGO, alt: '' })
 						)
 					),
 					React.createElement(
@@ -224,7 +219,6 @@ var Index = React.createClass({
 
       // Pivot the data to make it more accessible
       var serviceState = {};
-      console.log(data.states);
       data.states.map(function (srv) {
         serviceState[srv.name] = srv.state;
       });
@@ -236,89 +230,53 @@ var Index = React.createClass({
     var M = this.props.intl.formatMessage;
     var self = this;
 
-    console.log(self.state.serviceState);
-
     return React.createElement(
       'div',
       { className: 'inner-wrapper' },
-      React.createElement(Navigation, { active: 'home' }),
       React.createElement(
-        'section',
-        { className: 'row no-border' },
+        'div',
+        { className: 'twelve-col last-col' },
         React.createElement(
           'h2',
-          null,
+          { className: 'twelve-col last-col' },
           TITLE
-        ),
-        React.createElement(
-          'div',
-          null,
-          React.createElement(
-            'div',
-            { className: 'box' },
-            M({ id: 'description' })
-          )
         )
       ),
       React.createElement(
-        'section',
-        { className: 'row no-border' },
+        'div',
+        { className: 'twelve-col last-col' },
         React.createElement(
-          'h3',
-          null,
-          M({ id: 'services' })
-        ),
-        React.createElement(
-          'table',
-          null,
-          React.createElement(
-            'thead',
-            null,
-            React.createElement(
-              'tr',
-              null,
+          'div',
+          { className: 'applist-grid' },
+          services.map(function (srv) {
+            var state = 'not_running';
+            if (self.state.serviceState[srv]) {
+              state = M({ id: self.state.serviceState[srv] });
+            }
+            return React.createElement(
+              'div',
+              { className: 'applist-item three-col' },
               React.createElement(
-                'th',
-                null,
-                M({ id: 'serviceName' })
+                'div',
+                { className: 'applist-icon-wrapper' },
+                React.createElement('img', { className: 'applist-icon', src: '/static/images/' + srv + '.svg' })
               ),
               React.createElement(
-                'th',
-                null,
-                M({ id: 'serviceDesc' })
-              ),
-              React.createElement(
-                'th',
-                null,
-                M({ id: 'serviceState' })
-              )
-            )
-          ),
-          React.createElement(
-            'tbody',
-            null,
-            services.map(function (srv) {
-              return React.createElement(
-                'tr',
-                null,
+                'div',
+                { className: 'applist-meta' },
                 React.createElement(
-                  'td',
-                  null,
+                  'h3',
+                  { className: 'applist-name' },
                   M({ id: srv })
                 ),
                 React.createElement(
-                  'td',
-                  null,
-                  M({ id: srv + 'Desc' })
-                ),
-                React.createElement(
-                  'td',
-                  null,
-                  self.state.serviceState[srv]
+                  'p',
+                  { className: 'applist-state' },
+                  state
                 )
-              );
-            })
-          )
+              )
+            );
+          })
         )
       ),
       React.createElement(Footer, null)
@@ -413,10 +371,7 @@ module.exports = injectIntl(Navigation);
 'use strict';
 
 var Constants = {
-    SERVICES: ['nextcloud', 'ssh'],
-
-    nextcloudService: "snap.nextcloud.nextcloud.service",
-    sshService: "ssh.service"
+    SERVICES: ["snapweb", "nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"]
 };
 
 module.exports = Constants;
@@ -445,17 +400,33 @@ var intlData = {
         home: "Home",
         title: "SMB Admin",
         version: "Version",
+        running: "Running",
+        not_running: "Not Running",
 
-        services: "Services",
-        serviceName: "Name",
-        serviceDesc: "Description",
-        serviceState: "Status",
+        nextcloud: "Nextcloud",
+        nextcloudDesc: "Nextcloud is a safe home for all your data. Access, share and protect your files, calendars, contacts and communication and more. Nextcloud comes with a feature rich set of pre-integrated services and is developed using a fully open source platform designed to give enterprises full control and privacy.",
 
-        nextcloud: "NextCloud",
-        nextcloudDesc: "A safe home for your data. Access, share and protect your files, calendars, contacts, communication & more at home and in your enterprise.",
+        snapweb: "Snapweb",
+        snapDesc: "Administration interface for Ubuntu Core.",
 
-        ssh: "Secure Shell Server",
-        sshDesc: "It encrypts all traffic to eliminate eavesdropping, connection hijacking, and other attacks. In addition, OpenSSH provides a large suite of secure tunneling capabilities, several authentication methods, and sophisticated configuration options."
+        wekan: "Wekan",
+        wekanDesc: "Wekan is an open source Kanban workflow tool that allows you to create boards, on which cards can be moved around between a number of columns. Boards can have many members, allowing for easy collaboration, just add everyone that should be able to work with you on the board to it, and you are good to go!",
+
+        rocketchat: "Rocket.Chat",
+        rocketchatDesc: "Rocket.Chat is a dynamic and innovative toolkit providing group messaging and video communication and collaboration. It is a great solution for communities and companies wanting to privately host their own chat service.",
+
+        gogs: "Go Git Service",
+        gogsDesc: "Gogs is a easy to use code repository service based on Git designed for self hosted environments. Gogs provides a full code management and distribution and is designed to help developers accelerate projects within a fully private environment.",
+
+        spreed: "Spreed",
+        spreedDesc: "Spreed is a private video and chat messaging service based on WebRTC and is available through Nextcloud. The service brings you easy to use web conferencing, one to one calls, chat and is designed to give the enterprise full control of its communication.",
+
+        iredmail: "iRedMail",
+        iredmailDesc: "Iredmail is the complete self-hosted, open source mail server solution for enterprises. With iRedMail, you can deploy a full feature mail server in several minutes.",
+
+        collabora: "Collabora",
+        collaboraDesc: "Collaborative editing with LibreOffice using your own private cloud. Collabora Online is for enterprises that want a powerful self-hosted office suite that protects their privacy and allows them to keep full control of their sensitive corporate data."
+
     }
 };
 

@@ -2947,3 +2947,60 @@ blockquote {
 
 footer div {
   padding-left: 10px; }
+
+.banner {
+  background-color: #fff; }
+
+.inner-wrapper {
+  margin: 0 auto;
+  max-width: 1030px;
+  background-color: transparent;
+  box-shadow: none; }
+
+.applist-grid {
+  margin: 0 15px; }
+
+.applist-grid .applist-item {
+  background-color: #fff;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  overflow: hidden; }
+
+.applist-item {
+  cursor: pointer; }
+
+.applist-icon-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 25px 20px 40px; }
+
+.applist-icon {
+  max-height: 100%;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  top: 50%; }
+
+.applist-grid .applist-meta {
+  border-top: 1px dotted #cdcdcd;
+  padding: 10px 0 15px;
+  height: 50px;
+  box-sizing: content-box; }
+
+.applist-grid .applist-name {
+  margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.applist-grid .applist-state {
+  color: #888;
+  margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+@media screen and (min-width: 640px) {
+  .applist-grid {
+    margin: 0 15px; } }

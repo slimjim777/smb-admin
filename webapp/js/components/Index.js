@@ -47,7 +47,6 @@ var Index = React.createClass({
 
       // Pivot the data to make it more accessible
       var serviceState = {};
-      console.log(data.states);
       data.states.map(function(srv) {
         serviceState[srv.name] = srv.state;
       });
@@ -60,40 +59,35 @@ var Index = React.createClass({
     var M = this.props.intl.formatMessage;
     var self = this;
 
-    console.log(self.state.serviceState);
-
     return (
         <div className="inner-wrapper">
-          <Navigation active="home" />
 
-          <section className="row no-border">
-            <h2>{TITLE}</h2>
-            <div>
-              <div className="box">
-                {M({id: 'description'})}
-              </div>
-            </div>
-          </section>
+          <div className="twelve-col last-col">
+            <h2 className="twelve-col last-col">{TITLE}</h2>
+          </div>
 
-          <section className="row no-border">
-            <h3>{M({id: 'services'})}</h3>
-            <table>
-              <thead>
-                <tr><th>{M({id: 'serviceName'})}</th><th>{M({id: 'serviceDesc'})}</th><th>{M({id: 'serviceState'})}</th></tr>
-              </thead>
-              <tbody>
-                {services.map(function(srv) {
+          <div className="twelve-col last-col">
+            <div className="applist-grid">
+              {services.map(function(srv) {
+                  var state = 'not_running';
+                  if (self.state.serviceState[srv]) {
+                    state = M({id: self.state.serviceState[srv]});
+                  }
                   return (
-                    <tr>
-                      <td>{M({id: srv})}</td>
-                      <td>{M({id: srv + 'Desc'})}</td>
-                      <td>{self.state.serviceState[srv]}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </section>
+                    <div className="applist-item three-col">
+                      <div className="applist-icon-wrapper">
+                        <img className="applist-icon" src={'/static/images/' + srv + '.svg'} />
+                      </div>
+                      <div className="applist-meta">
+                        <h3 className="applist-name">{M({id: srv})}</h3>
+                        <p className="applist-state">{state}</p>
+                      </div>
+                    </div>
+                  );
+              })}
+            </div>
+          </div>
+
 
           <Footer />
         </div>

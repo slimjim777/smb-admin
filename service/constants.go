@@ -27,7 +27,7 @@ const (
 	defaultPortUsage       = "default server port e.g. '8000'"
 
 	defaultTitle   = "SMB Admin"
-	defaultLogo    = "/static/images/logo-ubuntu-white.svg"
+	defaultLogo    = "/static/images/logo-ubuntu-orange.svg"
 	defaultDocRoot = "."
 )
 
@@ -42,8 +42,7 @@ const (
 const version = "0.1"
 
 // serviceKeys defines the key names of each of the services
-var serviceKeys = [...]string{"nextcloud", "ssh"}
+var serviceKeys = [...]string{"snapweb", "nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}
 
 // serviceNames defines the snapped service names of the services
-//var serviceNames = [...]string{"snap.nextcloud.nextcloud.service", "ssh.service"}
-var serviceNames = [...]string{"nextcloud", "sshd"}
+var serviceNames = [...]string{"snapweb", "nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}
