@@ -46,3 +46,7 @@ var serviceKeys = [...]string{"snapweb", "nextcloud", "wekan", "rocketchat", "go
 
 // serviceNames defines the snapped service names of the services
 var serviceNames = [...]string{"snapweb", "nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}
+
+// serviceConfigure defines the URL to configure the service.
+// The value is appended to protocol://domain_name
+var serviceConfigure = [...]string{":4200", "/index.php/settings/admin", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}

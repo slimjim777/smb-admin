@@ -55,6 +55,14 @@ var Index = React.createClass({
     });
   },
 
+  handleAppClick: function(e) {
+    if (e) {
+      e.preventDefault();
+      window.location = '/app/' + e.target.getAttribute('data-key');
+    }
+
+  },
+
   render: function() {
     var M = this.props.intl.formatMessage;
     var self = this;
@@ -62,7 +70,7 @@ var Index = React.createClass({
     return (
         <div className="inner-wrapper">
 
-          <div className="twelve-col last-col">
+          <div className="app-headline twelve-col last-col">
             <h2 className="twelve-col last-col">{TITLE}</h2>
           </div>
 
@@ -74,13 +82,13 @@ var Index = React.createClass({
                     state = M({id: self.state.serviceState[srv]});
                   }
                   return (
-                    <div className="applist-item three-col">
-                      <div className="applist-icon-wrapper">
-                        <img className="applist-icon" src={'/static/images/' + srv + '.svg'} />
+                    <div className="applist-item three-col" data-key={srv} onClick={self.handleAppClick}>
+                      <div className="applist-icon-wrapper" data-key={srv}>
+                        <img className="applist-icon" src={'/static/images/' + srv + '.svg'} data-key={srv} />
                       </div>
-                      <div className="applist-meta">
-                        <h3 className="applist-name">{M({id: srv})}</h3>
-                        <p className="applist-state">{state}</p>
+                      <div className="applist-meta" data-key={srv}>
+                        <h3 className="applist-name" data-key={srv}>{M({id: srv})}</h3>
+                        <p className="applist-state" data-key={srv}>{state}</p>
                       </div>
                     </div>
                   );

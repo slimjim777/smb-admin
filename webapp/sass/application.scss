@@ -13,6 +13,10 @@ footer div {
 	background-color: #fff;
 }
 
+.wrapper {
+    max-width: 1030px;
+}
+
 .inner-wrapper {
 	margin: 0 auto;
 	max-width: 1030px;
@@ -20,8 +24,12 @@ footer div {
 	box-shadow: none;
 }
 
+.app-headline {
+    padding: 0 15px;
+}
+
 .applist-grid {
-		margin: 0 15px;
+	margin: 0 10px;
 }
 
 .applist-grid .applist-item {
@@ -39,11 +47,11 @@ footer div {
 .applist-icon-wrapper {
     width: 100%;
     height: 100%;
-	padding: 25px 20px 40px;
+	padding: 25px 20px 100px;
 }
 
 .applist-icon {
-    max-height: 100%;
+    max-height: 194px;
     margin: 0 auto;
     display: block;
     position: relative;
@@ -55,6 +63,9 @@ footer div {
     padding: 10px 0 15px;
     height: 50px;
     box-sizing: content-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .applist-grid .applist-name {
@@ -72,10 +83,19 @@ footer div {
     text-overflow: ellipsis;
 }
 
+.app-configure button {
+    width: 100%;
+}
+
 @media screen and (min-width: 640px) { 
 	.applist-grid {
 		margin: 0 15px;
 	}
+
+    .three-col {
+        width: 23.42105%;
+        margin-right: 1.5%;
+    }
 
 
 }

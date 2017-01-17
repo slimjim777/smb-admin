@@ -23,6 +23,7 @@ var IndexRoute = require('react-router').IndexRoute;
 var browserHistory = require('react-router').browserHistory;
 var App = require('./components/App');
 var Index = require('./components/Index');
+var Detail = require('./components/Detail');
 
 // Imports for i18n
 import {IntlProvider, addLocaleData} from 'react-intl';
@@ -50,6 +51,7 @@ window.AppState = {
         <Router history={browserHistory}>
           <Route path="/" component={App}>
             <IndexRoute component={Index} />
+            <Route path="app/:name" component={Detail} />
             <Route path="*" component={Index} />
           </Route>
         </Router>
