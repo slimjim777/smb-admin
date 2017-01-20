@@ -17,7 +17,6 @@
 'use strict'
 
 var React = require('react');
-var Navigation = require('./Navigation');
 var Footer = require('./Footer');
 var injectIntl = require('react-intl').injectIntl;
 var services = require('./constants').SERVICES;

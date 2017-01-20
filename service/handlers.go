@@ -23,9 +23,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
+	"net/url"
+	"path"
 	"strings"
+
+	"github.com/gorilla/mux"
 
 	"gopkg.in/pipe.v2"
 )
@@ -76,6 +82,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // StatesHandler returns the active state of the SMB services
 func StatesHandler(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	states := []ActiveState{}
 
 	// Find the active state of each of the services
@@ -101,7 +109,7 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 			currentState = "running"
 		}
 
-		state := ActiveState{Name: srv, State: currentState, Configure: serviceConfigure[index]}
+		state := ActiveState{Name: srv, About: serviceAbout[index], State: currentState, Configure: serviceConfigure[index]}
 		states = append(states, state)
 	}
 
@@ -110,4 +118,40 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		log.Println("Error forming the states response.")
 	}
+}
+
+// DetailsHandler uses the snapd REST API to retrieve the details of an installed service
+func DetailsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	// Get the service name and build the snapd REST API URL
+	const serviceDetailsURL = "/v2/snaps/"
+	vars := mux.Vars(r)
+	urlPrl := path.Join(serviceDetailsURL, vars["name"])
+
+	baseURL := url.URL{Scheme: "http", Host: "localhost", Path: urlPrl}
+
+	tr := &http.Transport{
+		Dial: snapdDialer,
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(baseURL.String())
+	if err != nil {
+		// TODO: replace with an error response
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// TODO: replace with an error response
+		log.Fatal(err)
+	}
+
+	fmt.Fprint(w, string(body))
+}
+
+func snapdDialer(proto, addr string) (conn net.Conn, err error) {
+	return net.Dial("unix", "/run/snapd.socket")
 }

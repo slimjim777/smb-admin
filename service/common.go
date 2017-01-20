@@ -36,6 +36,7 @@ type Env struct {
 // ActiveState is the current state of a service
 type ActiveState struct {
 	Name      string `json:"name"`
+	About     string `json:"about"`
 	State     string `json:"state"`
 	Configure string `json:"configure"`
 }
