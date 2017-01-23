@@ -33,7 +33,6 @@ class ServicePage extends Component {
   getDetails () {
 
     api.serviceDetails(this.state.service.id).then(response => {
-      console.log(response.data.result)
 
       var items = [
         ['Status', 'not_installed'],
@@ -58,7 +57,6 @@ class ServicePage extends Component {
   }
 
   render () {
-    console.log(this.state.service)
 
     return (
       <div className='ServicePage'>

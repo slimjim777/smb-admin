@@ -14,24 +14,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import axios from 'axios'
 
-const API_VERSION = '/v1/';
-
-var service = {
-
-    serviceStates: function (query, cancelCallback) {
-        return axios.get(API_VERSION + 'servicestates');
-    },
-
-    version: function (query, cancelCallback) {
-        return axios.get(API_VERSION + 'version');
-    },
-
-    serviceDetails: function (query, cancelCallback) {
-        return axios.get(API_VERSION + 'details/' + query);
-    }
-
+function getBaseURL() {
+    return location.protocol + '//' + location.hostname + ':8000';
 }
 
-export default service
+var Constants = {
+    baseUrl: getBaseURL()
+}
+
+export default Constants

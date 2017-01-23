@@ -80,7 +80,7 @@ class App extends Component {
 
   getVersion() {
     api.version().then(response => {
-      this.setState({ version: ' (' + response.data.version + ')' })
+      this.setState({ version: 'Version: ' + response.data.version})
     })
   }
 
@@ -179,7 +179,8 @@ class App extends Component {
 
         <Footer 
           firstLine={this.state.version}
-          logo={`© ${(new Date()).getFullYear()} ${brandData.name}`}
+          copyright={`© ${(new Date()).getFullYear()} ${brandData.name}`}
+          logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
         />
       </div>
     )
