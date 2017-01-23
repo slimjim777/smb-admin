@@ -4,7 +4,7 @@ import ContentWrapper from 'toolkit/ContentWrapper/ContentWrapper'
 import Banner from './Banner/Banner'
 import CardsList from 'toolkit/CardsList/CardsList'
 
-const publicUrl =  process.env.PUBLIC_URL
+const publicUrl = process.env.PUBLIC_URL
 
 const bannerData = {
   photo: 'banner-photo.png', 

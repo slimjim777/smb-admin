@@ -23,13 +23,15 @@ import (
 	"net/http"
 	"strings"
 
+	"log"
+
 	"github.com/gorilla/mux"
 )
 
 // Environ contains the parsed config file settings.
 var Environ *Env
 
-var indexTemplate = "/static/app.html"
+var indexTemplate = "/index.html"
 
 // Page is the page details for the web application
 type Page struct {
@@ -50,6 +52,7 @@ func AdminRouter(env *Env) *mux.Router {
 
 	// Web application routes
 	path := []string{env.Config.DocRoot, "/static/"}
+	log.Println(path)
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
 	router.PathPrefix("/static/").Handler(fs)
 	router.Handle("/app/{name:[a-zA-Z0-9]+}", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")

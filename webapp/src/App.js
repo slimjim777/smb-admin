@@ -5,7 +5,6 @@ import If from 'toolkit/If'
 import Header from 'toolkit/Header/Header'
 import Footer from 'toolkit/Footer/Footer'
 
-//import createServices from './services-data'
 import api from './models/api'
 
 import HomePage from './HomePage'
@@ -21,7 +20,7 @@ const history = createHistory()
 const sections = ['service']
 
 const brandData = {
-    name: 'KEYMILE',
+    name: 'KeyMile',
     id: 'keymile',
     color: '#FF7301',
 }
@@ -39,23 +38,6 @@ function openNewTab(url) {
         }
 }
 
-function getTimeStamp() {
-  const today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth()+1;
-  const yyyy = today.getFullYear();
-  let hours = today.getHours()
-  let mins = today.getMinutes()
-  let secs = today.getSeconds()
-
-  if(dd<10) dd='0'+dd
-  if(mm<10) mm='0'+mm
-  if(hours<10) hours='0'+hours
-  if(mins<10) mins='0'+mins
-  if(secs<10) secs='0'+secs
-
-  return dd+'/'+mm+'/'+yyyy+' '+hours+':'+mins+':'+secs;
-}
 
 class App extends Component {
 
@@ -71,8 +53,6 @@ class App extends Component {
     history.listen(this.handleNavigation.bind(this))
 
     this.onMenuItemClick = this.onMenuItemClick.bind(this)
-    // this.onRequestStop = this.onRequestStop.bind(this)
-    // this.onRequestStart = this.onRequestStart.bind(this)
     this.onRequestAdminPage = this.onRequestAdminPage.bind(this)
 
     this.getServices()
@@ -130,27 +110,6 @@ class App extends Component {
 
   onOpenService(id) {
     history.push('/service/' + id)
-  }
-
-  onRequestStop(id) {
-    const newServices = this.state.installedServices
-    const index = this.state.installedServices.findIndex(service => (
-                                                      service.id === id))
-    if (newServices[index].action === 'Running') {
-      newServices[index].action = 'Stopped'
-      newServices[index].history.unshift('Stopped ' + getTimeStamp())
-      this.setState({installedServices: newServices})
-    }
-  }
-  onRequestStart(id) {
-    const newServices = this.state.installedServices
-    const index = this.state.installedServices.findIndex(service => (
-                                                      service.id === id))
-    if (newServices[index].action === 'Stopped') {
-      newServices[index].action = 'Running'
-      newServices[index].history.unshift('Started ' + getTimeStamp())
-      this.setState({installedServices: newServices})
-    }
   }
 
   onRequestAdminPage(id) {
@@ -220,7 +179,7 @@ class App extends Component {
 
         <Footer 
           firstLine={this.state.version}
-          logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
+          logo={`© ${(new Date()).getFullYear()} ${brandData.name}`}
         />
       </div>
     )

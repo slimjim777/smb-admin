@@ -28,7 +28,7 @@ const (
 
 	defaultTitle   = "SMB Admin"
 	defaultLogo    = "/static/images/logo-ubuntu-orange.svg"
-	defaultDocRoot = "."
+	defaultDocRoot = "./webapp/build"
 )
 
 // Environment variables that will be checked

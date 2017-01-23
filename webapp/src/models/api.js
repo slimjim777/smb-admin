@@ -16,21 +16,26 @@
  */
 import axios from 'axios'
 
-const API_VERSION = 'http://localhost:8000/v1/';
+const API_VERSION = '/v1/';
+
+function getBaseURL() {
+    return location.protocol + '//' + location.hostname + ':8000';
+}
 
 var service = {
 
     serviceStates: function (query, cancelCallback) {
-        return axios.get(API_VERSION + 'servicestates');
+        return axios.get(getBaseURL() + API_VERSION + 'servicestates');
     },
 
     version: function (query, cancelCallback) {
-        return axios.get(API_VERSION + 'version');
+        return axios.get(getBaseURL() + API_VERSION + 'version');
     },
 
     serviceDetails: function (query, cancelCallback) {
-        console.log(API_VERSION + 'details/' + query)
-        return axios.get(API_VERSION + 'details/' + query);
+        console.log(getBaseURL());
+        console.log(API_VERSION + 'details/' + query);
+        return axios.get(getBaseURL() + API_VERSION + 'details/' + query);
     }
 
 }

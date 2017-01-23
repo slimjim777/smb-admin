@@ -24,8 +24,6 @@ class ServicePage extends Component {
       icon: `${props.cardImgRootUrl}${props.service.image}.png`,
       runningStatusText: props.service.status,
       isRunning: props.service.status==='running',
-      // onRequestStop,
-      // onRequestStart,
       location: history.location,
     }
 
@@ -85,11 +83,6 @@ class ServicePage extends Component {
                   />
                 </div>
                 <div className='ServicePage-button'>
-                  <Button
-                    label={this.state.isRunning?'Stop':'Start'}
-                    disabled={false}
-                    //onClick={() => { this.state.isRunning?onRequestStop(service.id):onRequestStart(service.id) }}
-                  />
                 </div>
               </div>
             </div>
