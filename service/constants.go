@@ -49,7 +49,7 @@ var serviceNames = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spre
 
 // serviceConfigure defines the URL to configure the service.
 // The value is appended to protocol://domain_name
-var serviceConfigure = [...]string{"/index.php/settings/admin", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}
+var serviceConfigure = [...]string{"/index.php/settings/admin", "wekan", "rocketchat", "gogs", ":8084", "iredmail", "collabora"}
 
 // serviceAbout defines the details of a service
 var serviceAbout = [...]string{

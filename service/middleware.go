@@ -47,6 +47,9 @@ func Middleware(inner http.Handler, env *Env) http.Handler {
 		// Log the request
 		Logger(start, r)
 
+		// For development, allow cross-domain access
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
 		inner.ServeHTTP(w, r)
 	})
 }

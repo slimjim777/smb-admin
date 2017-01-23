@@ -13,6 +13,7 @@ apps:
         - network
         - network-bind
         - system-observe
+        - snapd-control
 parts:
     service:
         plugin: go
