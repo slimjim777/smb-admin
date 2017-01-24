@@ -21,6 +21,7 @@ class ServicePage extends Component {
       service: props.service,
       items: [],
       interfaces: [],
+      changes: [],
       details: {},
       icon: `${props.cardImgRootUrl}${props.service.image}.png`,
       runningStatusText: props.service.status,
@@ -30,6 +31,7 @@ class ServicePage extends Component {
 
     this.getDetails()
     this.getInterfaces()
+    this.getChanges()
   }
 
   getDetails () {
@@ -74,6 +76,24 @@ class ServicePage extends Component {
       }
 
       this.setState({interfaces: items})
+    })
+  }
+
+  getChanges () {
+
+    api.changes().then(response => {
+
+      var items = []
+
+      if (response.data.status === 'OK') {
+        response.data.result.map(chg => {
+          if (chg.summary.includes(this.state.service.id)) {
+            items.push( [chg.summary, moment(chg['spawn-time']).format('lll')] )
+          }
+        })
+      }
+
+      this.setState({changes: items})
     })
   }
 
@@ -132,7 +152,7 @@ class ServicePage extends Component {
           </ContentWrapper>
           <ContentWrapper bordered>
             <History 
-              history={this.state.service.history || []}
+              items={this.state.changes}
             />
           </ContentWrapper>
       </div>

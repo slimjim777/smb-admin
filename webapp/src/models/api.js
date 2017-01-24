@@ -34,6 +34,10 @@ var service = {
 
     interfaces: function (query, cancelCallback) {
         return axios.get(API_VERSION + 'interfaces');
+    },
+
+    changes: function (query, cancelCallback) {
+        return axios.get(API_VERSION + 'changes');
     }
 }
 

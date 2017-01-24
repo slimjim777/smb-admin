@@ -157,8 +157,37 @@ func InterfacesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	// Build the snapd REST API URL
-	const serviceDetailsURL = "/v2/interfaces"
-	baseURL := url.URL{Scheme: "http", Host: "localhost", Path: serviceDetailsURL}
+	const serviceInterfacesURL = "/v2/interfaces"
+	baseURL := url.URL{Scheme: "http", Host: "localhost", Path: serviceInterfacesURL}
+
+	tr := &http.Transport{
+		Dial: snapdDialer,
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(baseURL.String())
+	if err != nil {
+		// TODO: replace with an error response
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// TODO: replace with an error response
+		log.Fatal(err)
+	}
+
+	fmt.Fprint(w, string(body))
+}
+
+// ChangesHandler uses the snapd REST API to retrieve the system changes
+func ChangesHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	// Build the snapd REST API URL
+	const serviceChangesURL = "/v2/changes"
+	baseURL := url.URL{Scheme: "http", Host: "localhost", Path: serviceChangesURL, RawQuery: "select=all"}
 
 	tr := &http.Transport{
 		Dial: snapdDialer,

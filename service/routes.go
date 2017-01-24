@@ -47,6 +47,7 @@ func AdminRouter(env *Env) *mux.Router {
 
 	// API routes
 	router.Handle("/v1/version", Middleware(http.HandlerFunc(VersionHandler), env)).Methods("GET")
+	router.Handle("/v1/changes", Middleware(http.HandlerFunc(ChangesHandler), env)).Methods("GET")
 	router.Handle("/v1/interfaces", Middleware(http.HandlerFunc(InterfacesHandler), env)).Methods("GET")
 	router.Handle("/v1/servicestates", Middleware(http.HandlerFunc(StatesHandler), env)).Methods("GET")
 	router.Handle("/v1/details/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(DetailsHandler), env)).Methods("GET")
