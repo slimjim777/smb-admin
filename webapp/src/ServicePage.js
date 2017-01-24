@@ -59,21 +59,21 @@ class ServicePage extends Component {
 
   getInterfaces () {
     api.interfaces().then(response => {
-
       var items = []
 
       if (response.data.status === 'OK') {
         response.data.result.plugs.map(plug => {
-          var found = plug.apps.find(srv => (srv === this.state.service.id))
-          if (found) {
-            items.push(plug.interface)
+          if (plug.snap === this.state.service.id) {
+            // A snap can have multiple apps, and the apps have the interfaces not the snap
+            // Summarise the interface list to just include the unique names
+            if (!items.find(iface => (iface === plug.interface))) {
+              items.push(plug.interface)
+            }
           }
         })
       }
 
-      console.log(items)
       this.setState({interfaces: items})
-
     })
   }
 
