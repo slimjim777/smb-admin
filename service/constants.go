@@ -39,7 +39,7 @@ const (
 	envPort    = "SMBADMIN_PORT"
 )
 
-const version = "0.1"
+const version = "0.2"
 
 // serviceKeys defines the key names of each of the services
 var serviceKeys = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spreedme", "iredmail", "collabora"}

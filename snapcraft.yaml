@@ -1,5 +1,5 @@
 name: smb-admin
-version: 0.1
+version: 0.2
 summary: SMB Solution Admin Service
 description: Admin service for the SMB Solution.
 grade: stable

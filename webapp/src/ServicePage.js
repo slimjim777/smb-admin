@@ -20,6 +20,7 @@ class ServicePage extends Component {
     this.state = {
       service: props.service,
       items: [],
+      interfaces: [],
       details: {},
       icon: `${props.cardImgRootUrl}${props.service.image}.png`,
       runningStatusText: props.service.status,
@@ -28,6 +29,7 @@ class ServicePage extends Component {
     }
 
     this.getDetails()
+    this.getInterfaces()
   }
 
   getDetails () {
@@ -53,7 +55,26 @@ class ServicePage extends Component {
       this.setState({details: response.data.result, items: items})
 
     })
+  }
 
+  getInterfaces () {
+    api.interfaces().then(response => {
+
+      var items = []
+
+      if (response.data.status === 'OK') {
+        response.data.result.plugs.map(plug => {
+          var found = plug.apps.find(srv => (srv === this.state.service.id))
+          if (found) {
+            items.push(plug.interface)
+          }
+        })
+      }
+
+      console.log(items)
+      this.setState({interfaces: items})
+
+    })
   }
 
   render () {
@@ -103,11 +124,7 @@ class ServicePage extends Component {
 
               <div>
                 <Interfaces
-                  items={[
-                    'Network',
-                    'Network Bind',
-                    'Mount Observe',
-                  ]}
+                  items={this.state.interfaces}
                 />
               </div>
 

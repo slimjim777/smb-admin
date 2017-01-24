@@ -30,8 +30,11 @@ var service = {
 
     serviceDetails: function (query, cancelCallback) {
         return axios.get(API_VERSION + 'details/' + query);
-    }
+    },
 
+    interfaces: function (query, cancelCallback) {
+        return axios.get(API_VERSION + 'interfaces');
+    }
 }
 
 export default service

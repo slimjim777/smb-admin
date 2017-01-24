@@ -120,3 +120,39 @@ func TestStatesHandler(t *testing.T) {
 	}
 
 }
+
+func TestInterfacesHandler(t *testing.T) {
+
+	config := ConfigSettings{Version: "1.2.5"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/v1/interfaces", nil)
+	AdminRouter(Environ).ServeHTTP(w, r)
+
+	// Check the JSON response
+	result := StatesResponse{}
+	err := json.NewDecoder(w.Body).Decode(&result)
+	if err != nil {
+		t.Errorf("Error decoding the states response: %v", err)
+	}
+
+}
+
+func TestDetailsHandler(t *testing.T) {
+
+	config := ConfigSettings{Version: "1.2.5"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/v1/details/ubuntu-core", nil)
+	AdminRouter(Environ).ServeHTTP(w, r)
+
+	// Check the JSON response
+	result := StatesResponse{}
+	err := json.NewDecoder(w.Body).Decode(&result)
+	if err != nil {
+		t.Errorf("Error decoding the states response: %v", err)
+	}
+
+}

@@ -152,6 +152,35 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(body))
 }
 
+// InterfacesHandler uses the snapd REST API to retrieve the interfaces and return the full list
+func InterfacesHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	// Build the snapd REST API URL
+	const serviceDetailsURL = "/v2/interfaces"
+	baseURL := url.URL{Scheme: "http", Host: "localhost", Path: serviceDetailsURL}
+
+	tr := &http.Transport{
+		Dial: snapdDialer,
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(baseURL.String())
+	if err != nil {
+		// TODO: replace with an error response
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// TODO: replace with an error response
+		log.Fatal(err)
+	}
+
+	fmt.Fprint(w, string(body))
+}
+
 func snapdDialer(proto, addr string) (conn net.Conn, err error) {
 	return net.Dial("unix", "/run/snapd.socket")
 }

@@ -47,6 +47,7 @@ func AdminRouter(env *Env) *mux.Router {
 
 	// API routes
 	router.Handle("/v1/version", Middleware(http.HandlerFunc(VersionHandler), env)).Methods("GET")
+	router.Handle("/v1/interfaces", Middleware(http.HandlerFunc(InterfacesHandler), env)).Methods("GET")
 	router.Handle("/v1/servicestates", Middleware(http.HandlerFunc(StatesHandler), env)).Methods("GET")
 	router.Handle("/v1/details/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(DetailsHandler), env)).Methods("GET")
 
@@ -55,7 +56,7 @@ func AdminRouter(env *Env) *mux.Router {
 	log.Println(path)
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
 	router.PathPrefix("/static/").Handler(fs)
-	router.Handle("/app/{name:[a-zA-Z0-9]+}", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")
+	router.Handle("/service/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")
 	router.Handle("/", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")
 
 	return router
