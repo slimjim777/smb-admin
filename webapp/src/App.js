@@ -20,9 +20,9 @@ const history = createHistory()
 const sections = ['service']
 
 const brandData = {
-    name: 'KeyMile',
-    id: 'keymile',
-    color: '#FF7301',
+    name: 'Ubuntu',
+    id: 'ubuntu',
+    color: '#E95420',
 }
 
 function serviceIdFromPath(path) {
