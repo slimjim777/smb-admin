@@ -20,10 +20,10 @@ parts:
         source: git://github.com/ubuntu-core/smb-admin
         go-importpath: github.com/ubuntu-core/smb-admin
     assets:
-        source: static
+        source: webapp/build
         plugin: dump
         organize:
-            "*": static/
+            "*": webapp/build/
     scripts:
         source: bin
         plugin: dump
