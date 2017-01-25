@@ -35,12 +35,9 @@ class ServicePage extends Component {
   }
 
   getDetails () {
-
     api.serviceDetails(this.state.service.id).then(response => {
 
       var items = []
-
-      console.log(response.data)
 
       if (response.data.status === 'OK') {
         items = [
@@ -81,7 +78,6 @@ class ServicePage extends Component {
   }
 
   getChanges () {
-
     api.changes().then(response => {
 
       var items = []

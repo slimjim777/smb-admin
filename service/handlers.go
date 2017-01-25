@@ -141,8 +141,13 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := client.Get(baseURL.String())
 	if err != nil {
-		// TODO: replace with an error response
-		log.Fatal(err)
+		logMessage("details", "snapd-url", err.Error())
+		response := ErrorResponse{Type: "error", Status: "Internal Error", StatusCode: 404, Result: T("application_error")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
 	}
 	defer resp.Body.Close()
 
@@ -173,6 +178,7 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 // InterfacesHandler uses the snapd REST API to retrieve the interfaces and return the full list
 func InterfacesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	T, _ := i18n.Tfunc("en-US")
 
 	// Build the snapd REST API URL
 	const serviceInterfacesURL = "/v2/interfaces"
@@ -185,15 +191,25 @@ func InterfacesHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := client.Get(baseURL.String())
 	if err != nil {
-		// TODO: replace with an error response
-		log.Fatal(err)
+		logMessage("interfaces", "snapd-url", err.Error())
+		response := ErrorResponse{Type: "error", Status: "Internal Error", StatusCode: 404, Result: T("application_error")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		// TODO: replace with an error response
-		log.Fatal(err)
+		logMessage("interfaces", "snapd-response", err.Error())
+		response := ErrorResponse{Type: "error", Status: "Not Found", StatusCode: 404, Result: T("unknown")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
 	}
 
 	fmt.Fprint(w, string(body))
@@ -202,6 +218,7 @@ func InterfacesHandler(w http.ResponseWriter, r *http.Request) {
 // ChangesHandler uses the snapd REST API to retrieve the system changes
 func ChangesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	T, _ := i18n.Tfunc("en-US")
 
 	// Build the snapd REST API URL
 	const serviceChangesURL = "/v2/changes"
@@ -214,15 +231,25 @@ func ChangesHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := client.Get(baseURL.String())
 	if err != nil {
-		// TODO: replace with an error response
-		log.Fatal(err)
+		logMessage("changes", "snapd-url", err.Error())
+		response := ErrorResponse{Type: "error", Status: "Internal Error", StatusCode: 404, Result: T("application_error")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		// TODO: replace with an error response
-		log.Fatal(err)
+		logMessage("changes", "snapd-response", err.Error())
+		response := ErrorResponse{Type: "error", Status: "Not Found", StatusCode: 404, Result: T("unknown")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
 	}
 
 	fmt.Fprint(w, string(body))

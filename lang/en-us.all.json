@@ -15,6 +15,10 @@
     "id": "unknown",
     "translation": "Unknown"
   },
+  {
+    "id": "application_error",
+    "translation": "Application error"
+  },
 
   {
     "id": "nextcloud",

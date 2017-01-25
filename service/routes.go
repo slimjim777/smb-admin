@@ -23,8 +23,6 @@ import (
 	"net/http"
 	"strings"
 
-	"log"
-
 	"github.com/gorilla/mux"
 )
 
@@ -54,7 +52,6 @@ func AdminRouter(env *Env) *mux.Router {
 
 	// Web application routes
 	path := []string{env.Config.DocRoot, "/static/"}
-	log.Println(path)
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
 	router.PathPrefix("/static/").Handler(fs)
 	router.Handle("/service/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")

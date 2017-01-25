@@ -130,13 +130,10 @@ func TestInterfacesHandler(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/v1/interfaces", nil)
 	AdminRouter(Environ).ServeHTTP(w, r)
 
-	// Check the JSON response
-	result := StatesResponse{}
-	err := json.NewDecoder(w.Body).Decode(&result)
-	if err != nil {
-		t.Errorf("Error decoding the states response: %v", err)
+	// Check the response
+	if w.Code != 200 {
+		t.Errorf("Error fetching the interfaces: %v", w.Code)
 	}
-
 }
 
 func TestDetailsHandler(t *testing.T) {
@@ -148,11 +145,43 @@ func TestDetailsHandler(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/v1/details/ubuntu-core", nil)
 	AdminRouter(Environ).ServeHTTP(w, r)
 
-	// Check the JSON response
-	result := StatesResponse{}
+	// Check the response
+	if w.Code != 200 {
+		t.Errorf("Error fetching the details: %v", w.Code)
+	}
+}
+
+func TestDetailsHandlerNotFound(t *testing.T) {
+
+	config := ConfigSettings{Version: "1.2.5"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/v1/details/this-does-not-exist", nil)
+	AdminRouter(Environ).ServeHTTP(w, r)
+
+	// Check the response
+	result := ErrorResponse{}
 	err := json.NewDecoder(w.Body).Decode(&result)
 	if err != nil {
-		t.Errorf("Error decoding the states response: %v", err)
+		t.Errorf("Error decoding the details response: %v", err)
 	}
+	if result.StatusCode != 404 {
+		t.Errorf("Unexpected result code: %v", result.StatusCode)
+	}
+}
 
+func TestChangesHandler(t *testing.T) {
+
+	config := ConfigSettings{Version: "1.2.5"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/v1/changes", nil)
+	AdminRouter(Environ).ServeHTTP(w, r)
+
+	// Check the response
+	if w.Code != 200 {
+		t.Errorf("Error fetching the changes: %v", w.Code)
+	}
 }
