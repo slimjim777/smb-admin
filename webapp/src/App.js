@@ -64,11 +64,11 @@ class App extends Component {
     api.serviceStates().then(response => {
       var cards = response.data.states.map(srv => {
         return {
-          id: srv.name,
+          id: srv.id,
           name: srv.name,
           description: srv.description,
           action: srv.state,
-          image: srv.name,
+          image: srv.id,
           configure: srv.configure,
         }
       })

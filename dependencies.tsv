@@ -1,4 +1,5 @@
 github.com/gorilla/context	git	08b5f424b9271eedf6f9f0ce86cb9396ed337a42	2016-08-17T18:46:32Z
 github.com/gorilla/mux	git	757bef944d0f21880861c2dd9c871ca543023cba	2016-09-20T23:08:13Z
+github.com/nicksnyder/go-i18n	git	64786dc4f56b1cceffc2ce90a7f512d9ab70bba2	2017-01-20T16:00:56Z
 gopkg.in/pipe.v2	git	3c2ca4d525447ec8b2f606a6974f9c9f40831f26	2014-04-14T04:15:02Z
-gopkg.in/yaml.v2	git	a5b47d31c556af34a302ce5d659e6fea44d90de0	2016-09-28T15:37:09Z
+gopkg.in/yaml.v2	git	14227de293ca979cf205cd88769fe71ed96a97e2	2017-01-24T16:25:11Z

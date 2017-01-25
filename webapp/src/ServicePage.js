@@ -38,9 +38,9 @@ class ServicePage extends Component {
 
     api.serviceDetails(this.state.service.id).then(response => {
 
-      var items = [
-        ['Status', 'not_installed'],
-      ]
+      var items = []
+
+      console.log(response.data)
 
       if (response.data.status === 'OK') {
         items = [
@@ -51,7 +51,8 @@ class ServicePage extends Component {
           ['Size', filesize(response.data.result['installed-size'])],
           ['Installed', moment(response.data.result['install-date']).format('lll')],
         ]
-
+      } else {
+        items = [["Status", response.data.result]]
       }
 
       this.setState({details: response.data.result, items: items})

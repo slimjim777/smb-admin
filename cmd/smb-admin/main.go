@@ -23,10 +23,13 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/nicksnyder/go-i18n/i18n"
 	"github.com/ubuntu-core/smb-admin/service"
 )
 
 func main() {
+	i18n.MustLoadTranslationFile("./lang/en-us.all.json")
+
 	env := service.Env{Config: service.DefaultConfig()}
 
 	// Parse the command-line parameters

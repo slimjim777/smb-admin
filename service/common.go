@@ -35,8 +35,17 @@ type Env struct {
 
 // ActiveState is the current state of a service
 type ActiveState struct {
+	ID          string `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	State       string `json:"state"`
 	Configure   string `json:"configure"`
+}
+
+// ErrorResponse is the JSON response when an API call hits an error
+type ErrorResponse struct {
+	Type       string `json:"type"`
+	Status     string `json:"status"`
+	StatusCode int    `json:"status-code"`
+	Result     string `json:"result"`
 }

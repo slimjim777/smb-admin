@@ -32,6 +32,7 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
+	"github.com/nicksnyder/go-i18n/i18n"
 
 	"gopkg.in/pipe.v2"
 )
@@ -83,6 +84,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 // StatesHandler returns the active state of the SMB services
 func StatesHandler(w http.ResponseWriter, r *http.Request) {
 
+	T, _ := i18n.Tfunc("en-US")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	states := []ActiveState{}
 
@@ -104,12 +106,12 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Determine the running state of the service
-		var currentState = "not_running"
+		var currentState = T("not_running")
 		if len(string(output)) > 0 {
-			currentState = "running"
+			currentState = T("running")
 		}
 
-		state := ActiveState{Name: srv, Description: serviceAbout[index], State: currentState, Configure: serviceConfigure[index]}
+		state := ActiveState{ID: srv, Name: T(srv), Description: T(srv + "_desc"), State: currentState, Configure: serviceConfigure[index]}
 		states = append(states, state)
 	}
 
@@ -123,6 +125,7 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 // DetailsHandler uses the snapd REST API to retrieve the details of an installed service
 func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	T, _ := i18n.Tfunc("en-US")
 
 	// Get the service name and build the snapd REST API URL
 	const serviceDetailsURL = "/v2/snaps/"
@@ -143,10 +146,25 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
+	// If we have a 404, then the service is not installed
+	if resp.StatusCode == 404 {
+		response := ErrorResponse{Type: "error", Status: "Not Found", StatusCode: 404, Result: T("not_installed")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		// TODO: replace with an error response
-		log.Fatal(err)
+		logMessage("details", "snapd-response", err.Error())
+		response := ErrorResponse{Type: "error", Status: "Not Found", StatusCode: 404, Result: T("unknown")}
+		// Encode the response as JSON
+		if err := json.NewEncoder(w).Encode(response); err != nil {
+			log.Println("Error forming the error response.")
+		}
+		return
 	}
 
 	fmt.Fprint(w, string(body))
