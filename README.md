@@ -25,3 +25,7 @@ information about the snaps.
 $ sudo snap connect smb-admin:snapd-control :snapd-control
 $ snap interfaces
 ```
+
+
+[travis-image]: https://travis-ci.org/ubuntu-core/smb-admin.svg?branch=master
+[travis-url]: https://travis-ci.org/ubuntu-core/smb-admin
