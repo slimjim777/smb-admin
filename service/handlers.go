@@ -68,7 +68,7 @@ func VersionHandler(w http.ResponseWriter, r *http.Request) {
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	page := Page{Title: Environ.Config.Title, Logo: Environ.Config.Logo}
 
-	path := []string{Environ.Config.DocRoot, indexTemplate}
+	path := []string{Environ.Config.DocRootAdmin, indexTemplate}
 	t, err := template.ParseFiles(strings.Join(path, ""))
 	if err != nil {
 		log.Printf("Error loading the application template: %v\n", err)

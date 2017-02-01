@@ -20,7 +20,7 @@ export default function HomePage({
     <div>
       <ContentWrapper>
         <Banner
-          photo={`${publicUrl}/${bannerData.photo}`}
+          photo={`${publicUrl}/brands/${bannerData.photo}`}
           primaryText={bannerData.primaryText}
           secondaryText={bannerData.secondaryText}
           primaryColor={bannerData.primaryColor}

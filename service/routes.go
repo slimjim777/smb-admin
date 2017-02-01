@@ -51,7 +51,7 @@ func AdminRouter(env *Env) *mux.Router {
 	router.Handle("/v1/details/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(DetailsHandler), env)).Methods("GET")
 
 	// Web application routes
-	path := []string{env.Config.DocRoot, "/static/"}
+	path := []string{env.Config.DocRootAdmin, "/static/"}
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
 	router.PathPrefix("/static/").Handler(fs)
 	router.Handle("/service/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")

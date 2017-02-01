@@ -26,17 +26,17 @@ const (
 	defaultPort            = "8000"
 	defaultPortUsage       = "default server port e.g. '8000'"
 
-	defaultTitle   = "SMB Admin"
-	defaultLogo    = "/static/images/logo-ubuntu-orange.svg"
-	defaultDocRoot = "./webapp/build"
+	defaultTitle        = "SMB Admin"
+	defaultLogo         = "/static/images/logo-ubuntu-orange.svg"
+	defaultDocRootAdmin = "./static/build-admin" //"./webapp/build/build-admin"
 )
 
 // Environment variables that will be checked
 const (
-	envTitle   = "SMBADMIN_TITLE"
-	envLogo    = "SMBADMIN_LOGO"
-	envDocRoot = "SMBADMIN_DOCROOT"
-	envPort    = "SMBADMIN_PORT"
+	envTitle        = "SMBADMIN_TITLE"
+	envLogo         = "SMBADMIN_LOGO"
+	envDocRootAdmin = "SMBADMIN_DOCROOT_ADMIN"
+	envPort         = "SMBADMIN_PORT"
 )
 
 const version = "0.2"

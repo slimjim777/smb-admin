@@ -35,11 +35,11 @@ var settingsFile string
 // DefaultConfig returns the default config settings
 func DefaultConfig() ConfigSettings {
 	return ConfigSettings{
-		Version: version,
-		Title:   defaultTitle,
-		Logo:    defaultLogo,
-		DocRoot: defaultDocRoot,
-		Port:    defaultPort,
+		Version:      version,
+		Title:        defaultTitle,
+		Logo:         defaultLogo,
+		DocRootAdmin: defaultDocRootAdmin,
+		Port:         defaultPort,
 	}
 }
 
@@ -105,8 +105,8 @@ func readConfigFromEnvironment(config *ConfigSettings) {
 	}
 
 	// Set the document root from the environment variable, if it is set
-	if os.Getenv(envDocRoot) != "" {
-		config.DocRoot = os.Getenv(envDocRoot)
+	if os.Getenv(envDocRootAdmin) != "" {
+		config.DocRootAdmin = os.Getenv(envDocRootAdmin)
 	}
 
 	// Set the port from the environment variable, if it is set

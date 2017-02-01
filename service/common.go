@@ -21,11 +21,11 @@ package service
 
 // ConfigSettings defines the parsed config file settings.
 type ConfigSettings struct {
-	Version string
-	Title   string `yaml:"title"`
-	Logo    string `yaml:"logo"`
-	DocRoot string `yaml:"docRoot"`
-	Port    string `yaml:"port"`
+	Version      string
+	Title        string `yaml:"title"`
+	Logo         string `yaml:"logo"`
+	DocRootAdmin string `yaml:"docRootAdmin"`
+	Port         string `yaml:"port"`
 }
 
 // Env environment struct that holds the config details.
