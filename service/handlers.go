@@ -106,12 +106,14 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Determine the running state of the service
-		var currentState = T("not_running")
+		var currentState = "not_running"
+		var currentAction = T("not_running")
 		if len(string(output)) > 0 {
-			currentState = T("running")
+			currentState = "running"
+			currentAction = T("running")
 		}
 
-		state := ActiveState{ID: srv, Name: T(srv), Description: T(srv + "_desc"), State: currentState, Configure: serviceConfigure[index]}
+		state := ActiveState{ID: srv, Name: T(srv), Description: T(srv + "_desc"), State: currentState, Action: currentAction, Configure: serviceConfigure[index]}
 		states = append(states, state)
 	}
 

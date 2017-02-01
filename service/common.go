@@ -39,7 +39,8 @@ type ActiveState struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	State       string `json:"state"`
-	Configure   string `json:"configure"`
+	Action      string `json:"action"`
+	Configure   string `json:"adminPage"`
 }
 
 // ErrorResponse is the JSON response when an API call hits an error

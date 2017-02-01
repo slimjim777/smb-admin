@@ -112,8 +112,9 @@ class App extends Component {
           name: srv.name,
           description: srv.description,
           action: srv.state,
+          state: srv.state,
           image: srv.id,
-          configure: srv.configure,
+          adminPage: srv.adminPage,
         }
       })
 
