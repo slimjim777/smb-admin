@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import './ServicePage.css'
+import moment from 'moment'
+import filesize from 'filesize'
+import api from './models/api'
 
 import {
   If,
@@ -14,6 +17,20 @@ import {
 import History from './HistoryList'
 
 class ServicePage extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      items: [],
+      interfaces: [],
+      changes: [],
+      details: {},
+    }
+
+    this.getDetails(props.service)
+    this.getInterfaces(props.service)
+    this.getChanges(props.service)
+  }
 
   onButtonToOpenAdminClicked = () => {
     const { service, onRequestAdminPage } = this.props
@@ -31,6 +48,71 @@ class ServicePage extends Component {
     onRequestServicePage(service.id)
   }
 
+  getDetails (service) {
+
+    api.serviceDetails(service.id).then(response => {
+
+      var items = []
+
+      if (response.data.status === 'OK') {
+        items = [
+          ['Developer', response.data.result.developer],
+          ['Channel', response.data.result.channel],
+          ['Version', response.data.result.version],
+          ['Revision', response.data.result.revision],
+          ['Size', filesize(response.data.result['installed-size'])],
+          ['Installed', moment(response.data.result['install-date']).format('lll')],
+        ]
+      } else {
+        items = [["Status", response.data.result]]
+      }
+
+      this.setState({details: response.data.result, items: items})
+
+    })
+  }
+
+  getInterfaces (service) {
+
+    api.interfaces().then(response => {
+      var items = []
+
+      if (response.data.status === 'OK') {
+        response.data.result.plugs.map(plug => {
+          if (plug.snap === service.id) {
+            // A snap can have multiple apps, and the apps have the interfaces not the snap
+            // Summarise the interface list to just include the unique names
+            if (!items.find(iface => (iface === plug.interface))) {
+              items.push(plug.interface)
+            }
+          }
+          return plug;
+        })
+      }
+
+      this.setState({interfaces: items})
+    })
+  }
+
+  getChanges (service) {
+
+    api.changes().then(response => {
+
+      var items = []
+
+      if (response.data.status === 'OK') {
+        response.data.result.map(chg => {
+          if (chg.summary.includes(service.id)) {
+            items.push( [chg.summary, moment(chg['spawn-time']).format('lll')] )
+          }
+          return chg
+        })
+      }
+      this.setState({changes: items})
+    })
+  }
+
+
   render () {
 
     const {
@@ -38,17 +120,22 @@ class ServicePage extends Component {
       service,
     } = this.props
 
+    if (!service) {
+      return <div>Loading...</div>
+    }
+
+    const {
+      items,
+      changes,
+      interfaces,
+      details,
+    } = this.state
+
     const hasButtonToStopService = false
     const hasButtonToOpenService = false
 
     const isRunning = service.state === 'running'
-    const runningStatusText = service.status
     const icon = `${cardImgRootUrl}${service.image}.png`
-
-    const runningSince = `
-      This service has been ${runningStatusText.toLowerCase()}
-      since ${service.history[0][1]}
-    `
 
     return (
       <div className='ServicePage'>
@@ -61,7 +148,7 @@ class ServicePage extends Component {
                 <Summary
                   icon={icon}
                   name={service.name}
-                  description={runningSince}
+                  description={details.description}
                 />
               </div>
               <div className='ServicePage-buttonContainer'>
@@ -99,9 +186,9 @@ class ServicePage extends Component {
             <div className='ServicePage-content'>
 
               <div>
-                <If cond={service.details}>
+                <If cond={items}>
                   <Details
-                    items={service.details}
+                    items={items}
                   />
                 </If>
                 <div className='ServicePage-ServicePageAbout'>
@@ -112,20 +199,22 @@ class ServicePage extends Component {
               </div>
 
               <div>
-                <If cond={service.interfaces}>
+                <If cond={interfaces}>
                   <Interfaces
-                    items={service.interfaces}
+                    items={interfaces}
                   />
                 </If>
               </div>
 
             </div>
           </ContentWrapper>
-          <ContentWrapper bordered>
-            <History 
-              items={service.history}
-            />
-          </ContentWrapper>
+          <If cond={changes.length > 0}>
+            <ContentWrapper bordered>
+              <History 
+                items={changes}
+              />
+            </ContentWrapper>
+          </If>
       </div>
     )
   }

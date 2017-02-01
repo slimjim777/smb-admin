@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './AdminApp.css'
-
+import api from './models/api'
 
 import 'toolkit/lib/bundle.css'
  
@@ -10,7 +10,7 @@ import {
   Footer,
 } from 'toolkit'
 
-import createServices from './services-data-admin'
+//import createServices from './services-data-admin'
 
 import HomePage from './HomePage'
 import ServicePage from './ServicePage'
@@ -20,7 +20,7 @@ import createHistory from 'history/createBrowserHistory'
 const publicUrl = process.env.PUBLIC_URL
 
 // @todo: Replace this url with the real snapweb link on the device
-const snapwebUrl = 'http://localhost:3001/'
+const snapwebUrl = 'http://localhost:4200/'
 
 // @todo: Come up with a better admin profile name
 const defaultProfileName = 'Shawn Brannon' 
@@ -87,7 +87,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      installedServices: createServices(),
+      installedServices: [],
       location: history.location,
     }
 
@@ -98,6 +98,33 @@ class App extends Component {
     this.onRequestStart = this.onRequestStart.bind(this)
     this.onRequestAdminPage = this.onRequestAdminPage.bind(this)
     this.onRequestServicePage = this.onRequestServicePage.bind(this)
+
+    this.getServices()
+    this.getVersion()
+  }
+
+  getServices() {
+    // Get the installed services using the API
+    api.serviceStates().then(response => {
+      var cards = response.data.states.map(srv => {
+        return {
+          id: srv.id,
+          name: srv.name,
+          description: srv.description,
+          action: srv.state,
+          image: srv.id,
+          configure: srv.configure,
+        }
+      })
+
+      this.setState({ installedServices: cards })
+    });
+  }
+
+  getVersion() {
+    api.version().then(response => {
+      this.setState({ version: 'Version: ' + response.data.version})
+    })
   }
 
   findServiceById(id) {
@@ -214,7 +241,7 @@ class App extends Component {
               onOpenService={this.onOpenService}
             />
           </If>
-          <If cond={currentSection === 'service'}>
+          <If cond={currentSection === 'service' && installedServices.length > 0}>
             <ServicePage
               cardImgRootUrl={cardImgRootUrl}
               service={installedServices.find(service => (
@@ -232,7 +259,7 @@ class App extends Component {
         </main>
 
         <Footer 
-          firstLine={null}
+          firstLine={this.state.version}
           copyright={`© ${(new Date()).getFullYear()} ${brandData.name}`}
           logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
         />
