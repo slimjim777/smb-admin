@@ -26,8 +26,8 @@ import "os"
 func TestDefaultConfig(t *testing.T) {
 	config := DefaultConfig()
 
-	if config.DocRoot != defaultDocRoot {
-		t.Errorf("Expected default docroot of %s, got %s", defaultDocRoot, config.DocRoot)
+	if config.DocRootAdmin != defaultDocRootAdmin {
+		t.Errorf("Expected default docroot of %s, got %s", defaultDocRootAdmin, config.DocRootAdmin)
 	}
 	if config.Port != defaultPort {
 		t.Errorf("Expected default port of %s, got %s", defaultPort, config.Port)
@@ -67,7 +67,7 @@ func TestReadConfigEnv(t *testing.T) {
 	os.Setenv(envTitle, "SuperMegaBiz Admin")
 	os.Setenv(envLogo, "supermegabiz.jpg")
 	os.Setenv(envPort, "9000")
-	os.Setenv(envDocRoot, "../")
+	os.Setenv(envDocRootAdmin, "../")
 	err := ReadConfig(&config)
 	if err != nil {
 		t.Errorf("Error setting config from env: %v", err)
@@ -82,8 +82,8 @@ func TestReadConfigEnv(t *testing.T) {
 	if config.Port != "9000" {
 		t.Errorf("Error setting port from env, expected 9000, got: %v", config.Port)
 	}
-	if config.DocRoot != "../" {
-		t.Errorf("Error setting docroot from env, expected '../', got: %v", config.DocRoot)
+	if config.DocRootAdmin != "../" {
+		t.Errorf("Error setting docroot from env, expected '../', got: %v", config.DocRootAdmin)
 	}
 }
 
