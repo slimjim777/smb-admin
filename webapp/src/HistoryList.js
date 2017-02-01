@@ -16,3 +16,4 @@ export default function HistoryList(props) {
     </div>
   )
 }
+

@@ -1,18 +1,16 @@
 import React from 'react'
 
-import ContentWrapper from 'toolkit/ContentWrapper/ContentWrapper'
 import Banner from './Banner/Banner'
-import CardsList from 'toolkit/CardsList/CardsList'
 
-const publicUrl = process.env.PUBLIC_URL
+import {
+  ContentWrapper,
+  CardsList,
+} from 'toolkit'
 
-const bannerData = {
-  photo: 'banner-photo.png', 
-  deviceName: 'Self-hosted private cloud suite',
-  deviceId: 'An Ubuntu snap-based solution for forward-thinking enterprises to own and control their own data.',
-}
+const publicUrl =  process.env.PUBLIC_URL
 
 export default function HomePage({
+  bannerData,
   services,
   cardImgRootUrl,
   onOpenService,
@@ -23,8 +21,10 @@ export default function HomePage({
       <ContentWrapper>
         <Banner
           photo={`${publicUrl}/${bannerData.photo}`}
-          name={bannerData.deviceName}
-          id={bannerData.deviceId}
+          primaryText={bannerData.primaryText}
+          secondaryText={bannerData.secondaryText}
+          primaryColor={bannerData.primaryColor}
+          secondaryColor={bannerData.secondaryColor}
         />
       </ContentWrapper>
       <ContentWrapper background bordered>

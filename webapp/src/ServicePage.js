@@ -1,100 +1,54 @@
 import React, { Component } from 'react'
-import moment from 'moment'
-import filesize from 'filesize'
 import './ServicePage.css'
 
-import ContentWrapper from 'toolkit/ContentWrapper/ContentWrapper'
-import Details from 'toolkit/SnapPage/SnapPageDetails'
-import About from 'toolkit/SnapPage/SnapPageAbout'
-import Interfaces from 'toolkit/SnapPage/SnapPageInterfaces'
-import Button from 'toolkit/Button/Button'
-import Summary from 'toolkit/SnapPage/SnapPageSummary'
-import api from './models/api'
+import {
+  If,
+  ContentWrapper,
+  Button,
+  SnapPageDetails as Details,
+  SnapPageAbout as About,
+  SnapPageInterfaces as Interfaces,
+  SnapPageSummary as Summary,
+} from 'toolkit'
 
 import History from './HistoryList'
 
 class ServicePage extends Component {
-  constructor(props) {
-    super(props)
 
-    this.state = {
-      service: props.service,
-      items: [],
-      interfaces: [],
-      changes: [],
-      details: {},
-      icon: `${props.cardImgRootUrl}${props.service.image}.png`,
-      runningStatusText: props.service.status,
-      isRunning: props.service.status==='running',
-      location: history.location,
-    }
-
-    this.getDetails()
-    this.getInterfaces()
-    this.getChanges()
+  onButtonToOpenAdminClicked = () => {
+    const { service, onRequestAdminPage } = this.props
+    onRequestAdminPage(service.id)
   }
 
-  getDetails () {
-    api.serviceDetails(this.state.service.id).then(response => {
-
-      var items = []
-
-      if (response.data.status === 'OK') {
-        items = [
-          ['Developer', response.data.result.developer],
-          ['Channel', response.data.result.channel],
-          ['Version', response.data.result.version],
-          ['Revision', response.data.result.revision],
-          ['Size', filesize(response.data.result['installed-size'])],
-          ['Installed', moment(response.data.result['install-date']).format('lll')],
-        ]
-      } else {
-        items = [["Status", response.data.result]]
-      }
-
-      this.setState({details: response.data.result, items: items})
-
-    })
+  onButtonToStopServiceClicked = () => {
+    const { service, onRequestStop, onRequestStart } = this.props
+    const callback = service.state === 'running'? onRequestStop : onRequestStart
+    callback(service.id)
   }
 
-  getInterfaces () {
-    api.interfaces().then(response => {
-      var items = []
-
-      if (response.data.status === 'OK') {
-        response.data.result.plugs.map(plug => {
-          if (plug.snap === this.state.service.id) {
-            // A snap can have multiple apps, and the apps have the interfaces not the snap
-            // Summarise the interface list to just include the unique names
-            if (!items.find(iface => (iface === plug.interface))) {
-              items.push(plug.interface)
-            }
-          }
-        })
-      }
-
-      this.setState({interfaces: items})
-    })
-  }
-
-  getChanges () {
-    api.changes().then(response => {
-
-      var items = []
-
-      if (response.data.status === 'OK') {
-        response.data.result.map(chg => {
-          if (chg.summary.includes(this.state.service.id)) {
-            items.push( [chg.summary, moment(chg['spawn-time']).format('lll')] )
-          }
-        })
-      }
-
-      this.setState({changes: items})
-    })
+  onButtonToOpenServiceClicked = () => {
+    const { service, onRequestServicePage } = this.props
+    onRequestServicePage(service.id)
   }
 
   render () {
+
+    const {
+      cardImgRootUrl,
+      service,
+    } = this.props
+
+    const hasButtonToStopService = false
+    const hasButtonToOpenService = false
+
+    const isRunning = service.state === 'running'
+    const runningStatusText = service.status
+    const icon = `${cardImgRootUrl}${service.image}.png`
+
+    const runningSince = `
+      This service has been ${runningStatusText.toLowerCase()}
+      since ${service.history[0][1]}
+    `
 
     return (
       <div className='ServicePage'>
@@ -105,21 +59,37 @@ class ServicePage extends Component {
             <div className='ServicePage-headerParts'>
               <div>
                 <Summary
-                  icon={this.state.icon}
-                  name={this.state.service.name}
-                  description={this.state.details.description} 
+                  icon={icon}
+                  name={service.name}
+                  description={runningSince}
                 />
               </div>
               <div className='ServicePage-buttonContainer'>
                 <div className='ServicePage-button'>
                   <Button
                     label={'Admin interface'}
-                    
-                    onClick={() => { this.props.onRequestAdminPage(this.state.service.id) }}
+                    disabled={!isRunning}
+                    onClick={this.onButtonToOpenAdminClicked}
                   />
                 </div>
-                <div className='ServicePage-button'>
-                </div>
+                <If cond={hasButtonToOpenService}>
+                  <div className='ServicePage-button'>
+                    <Button
+                      label={'Open'}
+                      disabled={!isRunning}
+                      onClick={this.onButtonToOpenServiceClicked}
+                    />
+                  </div>
+                </If>
+                <If cond={hasButtonToStopService}>
+                  <div className='ServicePage-button'>
+                    <Button
+                      label={isRunning? 'Stop' : 'Start'}
+                      disabled={false}
+                      onClick={this.onButtonToStopServiceClicked}
+                    />
+                  </div>
+                </If>
               </div>
             </div>
           </div>
@@ -129,27 +99,31 @@ class ServicePage extends Component {
             <div className='ServicePage-content'>
 
               <div>
-                <Details
-                  items={this.state.items}
-                />
+                <If cond={service.details}>
+                  <Details
+                    items={service.details}
+                  />
+                </If>
                 <div className='ServicePage-ServicePageAbout'>
                   <About
-                    content={this.state.service.description}
+                    content={service.description}
                   />
                 </div>
               </div>
 
               <div>
-                <Interfaces
-                  items={this.state.interfaces}
-                />
+                <If cond={service.interfaces}>
+                  <Interfaces
+                    items={service.interfaces}
+                  />
+                </If>
               </div>
 
             </div>
           </ContentWrapper>
           <ContentWrapper bordered>
             <History 
-              items={this.state.changes}
+              items={service.history}
             />
           </ContentWrapper>
       </div>
