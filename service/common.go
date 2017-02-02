@@ -25,7 +25,10 @@ type ConfigSettings struct {
 	Title        string `yaml:"title"`
 	Logo         string `yaml:"logo"`
 	DocRootAdmin string `yaml:"docRootAdmin"`
-	Port         string `yaml:"port"`
+	DocRootUser  string `yaml:"docRootUser"`
+	PortAdmin    string `yaml:"portAdmin"`
+	PortUser     string `yaml:"portUser"`
+	Interface    string `yaml:"interface"`
 }
 
 // Env environment struct that holds the config details.

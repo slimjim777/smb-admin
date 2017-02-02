@@ -31,7 +31,7 @@ func main() {
 	i18n.MustLoadTranslationFile("./lang/en-us.all.json")
 
 	env := service.Env{Config: service.DefaultConfig()}
-	env.Config.Interface = service.InterfaceTypeAdmin
+	env.Config.Interface = service.InterfaceTypeUser
 
 	// Parse the command-line parameters
 	service.ParseArgs()
@@ -42,8 +42,8 @@ func main() {
 		log.Fatalf("Error reading the config: %v", err)
 	}
 
-	log.Println("Server will run on:", env.Config.PortAdmin)
-	port := ":" + env.Config.PortAdmin
+	log.Println("Server will run on:", env.Config.PortUser)
+	port := ":" + env.Config.PortUser
 
-	log.Fatal(http.ListenAndServe(port, service.AdminRouter(&env)))
+	log.Fatal(http.ListenAndServe(port, service.UserRouter(&env)))
 }

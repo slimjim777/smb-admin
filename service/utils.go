@@ -39,7 +39,9 @@ func DefaultConfig() ConfigSettings {
 		Title:        defaultTitle,
 		Logo:         defaultLogo,
 		DocRootAdmin: defaultDocRootAdmin,
-		Port:         defaultPort,
+		DocRootUser:  defaultDocRootUser,
+		PortAdmin:    defaultPortAdmin,
+		PortUser:     defaultPortUser,
 	}
 }
 
@@ -109,16 +111,31 @@ func readConfigFromEnvironment(config *ConfigSettings) {
 		config.DocRootAdmin = os.Getenv(envDocRootAdmin)
 	}
 
-	// Set the port from the environment variable, if it is set
-	if os.Getenv(envPort) != "" {
-		config.Port = os.Getenv(envPort)
+	// Set the document root from the environment variable, if it is set
+	if os.Getenv(envDocRootUser) != "" {
+		config.DocRootUser = os.Getenv(envDocRootUser)
+	}
+
+	// Set the admin port from the environment variable, if it is set
+	if os.Getenv(envPortAdmin) != "" {
+		config.PortAdmin = os.Getenv(envPortAdmin)
+	}
+
+	// Set the user port from the environment variable, if it is set
+	if os.Getenv(envPortUser) != "" {
+		config.PortUser = os.Getenv(envPortUser)
 	}
 
 }
 
 func verifyConfig(config *ConfigSettings) error {
 	// Check that the port is numeric
-	if _, err := strconv.Atoi(config.Port); err != nil {
+	if _, err := strconv.Atoi(config.PortAdmin); err != nil {
+		return errors.New(errorPortNotNumeric)
+	}
+
+	// Check that the port is numeric
+	if _, err := strconv.Atoi(config.PortUser); err != nil {
 		return errors.New(errorPortNotNumeric)
 	}
 

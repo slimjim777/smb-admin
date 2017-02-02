@@ -68,7 +68,14 @@ func VersionHandler(w http.ResponseWriter, r *http.Request) {
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	page := Page{Title: Environ.Config.Title, Logo: Environ.Config.Logo}
 
-	path := []string{Environ.Config.DocRootAdmin, indexTemplate}
+	// Set the document root based on the type of interface that is to be served
+	var path []string
+	if Environ.Config.Interface == InterfaceTypeAdmin {
+		path = []string{Environ.Config.DocRootAdmin, indexTemplate}
+	} else {
+		path = []string{Environ.Config.DocRootUser, indexTemplate}
+	}
+
 	t, err := template.ParseFiles(strings.Join(path, ""))
 	if err != nil {
 		log.Printf("Error loading the application template: %v\n", err)

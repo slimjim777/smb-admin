@@ -23,12 +23,15 @@ package service
 const (
 	defaultConfigFile      = ""
 	defaultConfigFileUsage = "Path to the config file"
-	defaultPort            = "8000"
-	defaultPortUsage       = "default server port e.g. '8000'"
+	defaultPortAdmin       = "8000"
+	defaultPortAdminUsage  = "default server port e.g. '8000'"
+	defaultPortUser        = "8001"
+	defaultPortUserUsage   = "default server port e.g. '8001'"
 
 	defaultTitle        = "SMB Admin"
 	defaultLogo         = "/static/images/logo-ubuntu-orange.svg"
-	defaultDocRootAdmin = "./static/build-admin" //"./webapp/build/build-admin"
+	defaultDocRootAdmin = "./static/build-admin"
+	defaultDocRootUser  = "./static/build-enduser"
 )
 
 // Environment variables that will be checked
@@ -36,10 +39,18 @@ const (
 	envTitle        = "SMBADMIN_TITLE"
 	envLogo         = "SMBADMIN_LOGO"
 	envDocRootAdmin = "SMBADMIN_DOCROOT_ADMIN"
-	envPort         = "SMBADMIN_PORT"
+	envDocRootUser  = "SMBADMIN_DOCROOT_USER"
+	envPortAdmin    = "SMBADMIN_PORTADMIN"
+	envPortUser     = "SMBADMIN_PORTUSER"
 )
 
 const version = "0.2"
+
+// The type of interface that will be shown
+const (
+	InterfaceTypeAdmin = "admin"
+	InterfaceTypeUser  = "user"
+)
 
 // serviceKeys defines the key names of each of the services
 var serviceKeys = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spreedme", "iredmail", "collabora"}

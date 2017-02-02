@@ -59,3 +59,26 @@ func AdminRouter(env *Env) *mux.Router {
 
 	return router
 }
+
+// UserRouter returns the application route handler for viewing the services
+func UserRouter(env *Env) *mux.Router {
+
+	// Start the web service router
+	router := mux.NewRouter()
+
+	// API routes
+	router.Handle("/v1/version", Middleware(http.HandlerFunc(VersionHandler), env)).Methods("GET")
+	// router.Handle("/v1/changes", Middleware(http.HandlerFunc(ChangesHandler), env)).Methods("GET")
+	// router.Handle("/v1/interfaces", Middleware(http.HandlerFunc(InterfacesHandler), env)).Methods("GET")
+	// router.Handle("/v1/servicestates", Middleware(http.HandlerFunc(StatesHandler), env)).Methods("GET")
+	// router.Handle("/v1/details/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(DetailsHandler), env)).Methods("GET")
+
+	// Web application routes
+	path := []string{env.Config.DocRootUser, "/static/"}
+	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
+	router.PathPrefix("/static/").Handler(fs)
+	router.Handle("/service/{name:[a-zA-Z0-9-_]+}", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")
+	router.Handle("/", Middleware(http.HandlerFunc(IndexHandler), env)).Methods("GET")
+
+	return router
+}
