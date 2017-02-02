@@ -1,5 +1,5 @@
 name: smb-admin
-version: 0.2
+version: 0.3
 summary: SMB Solution Admin Service
 description: Admin service for the SMB Solution.
 grade: stable
@@ -7,6 +7,14 @@ confinement: strict
 
 apps:
     smb-admin:
+      command: bin/run-service-admin
+      daemon: simple
+      plugs:
+        - network
+        - network-bind
+        - system-observe
+        - snapd-control
+    smb-user:
       command: bin/run-service
       daemon: simple
       plugs:
@@ -17,15 +25,22 @@ apps:
 parts:
     service:
         plugin: go
-        source: git://github.com/ubuntu-core/smb-admin
+        source: . git://github.com/ubuntu-core/smb-admin
         go-importpath: github.com/ubuntu-core/smb-admin
     assets:
-        source: webapp/build
+        source: static
         plugin: dump
         organize:
-            "*": webapp/build/
+            "build-admin": static/build-admin
+            "build-enduser": static/build-enduser
     scripts:
         source: bin
         plugin: dump
         organize:
             "run-service": bin/run-service
+            "run-service-admin": bin/run-service-admin
+    languages:
+        source: lang
+        plugin: dump
+        organize:
+            "*": lang/

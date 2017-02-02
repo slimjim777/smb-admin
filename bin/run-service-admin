@@ -2,4 +2,4 @@
 
 cd $SNAP
 
-bin/smb-user
+bin/smb-admin

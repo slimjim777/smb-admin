@@ -73,7 +73,7 @@ func TestVersionHandlerNilEnviron(t *testing.T) {
 
 func TestIndexHandler(t *testing.T) {
 
-	indexTemplate = "../static/app.html"
+	indexTemplate = "../static/build-admin/index.html"
 
 	config := ConfigSettings{Title: "Site Title", Logo: "/url"}
 	Environ = &Env{Config: config}

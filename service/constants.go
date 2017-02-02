@@ -23,10 +23,10 @@ package service
 const (
 	defaultConfigFile      = ""
 	defaultConfigFileUsage = "Path to the config file"
-	defaultPortAdmin       = "8000"
-	defaultPortAdminUsage  = "default server port e.g. '8000'"
-	defaultPortUser        = "8001"
-	defaultPortUserUsage   = "default server port e.g. '8001'"
+	defaultPortAdmin       = "4301"
+	defaultPortAdminUsage  = "default server port e.g. '4301'"
+	defaultPortUser        = "4300"
+	defaultPortUserUsage   = "default server port e.g. '4300'"
 
 	defaultTitle        = "SMB Admin"
 	defaultLogo         = "/static/images/logo-ubuntu-orange.svg"
@@ -44,7 +44,7 @@ const (
 	envPortUser     = "SMBADMIN_PORTUSER"
 )
 
-const version = "0.2"
+const version = "0.3"
 
 // The type of interface that will be shown
 const (
