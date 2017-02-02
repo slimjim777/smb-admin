@@ -3,13 +3,13 @@ import './AdminApp.css'
 import api from './models/api'
 import constants from './models/constants'
 
-import 'toolkit/lib/bundle.css'
+import 'snapweb-toolkit/lib/bundle.css'
  
 import {
   If,
   Header,
   Footer,
-} from 'toolkit'
+} from 'snapweb-toolkit'
 
 //import createServices from './services-data-admin'
 

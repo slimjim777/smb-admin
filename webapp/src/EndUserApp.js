@@ -3,12 +3,12 @@ import './EndUserApp.css'
 import api from './models/api'
 import constants from './models/constants'
 
-import 'toolkit/lib/bundle.css'
+import 'snapweb-toolkit/lib/bundle.css'
  
 import {
   Header,
   Footer,
-} from 'toolkit'
+} from 'snapweb-toolkit'
 
 import createServices from './services-data-user'
 

@@ -12,7 +12,7 @@ import {
   SnapPageAbout as About,
   SnapPageInterfaces as Interfaces,
   SnapPageSummary as Summary,
-} from 'toolkit'
+} from 'snapweb-toolkit'
 
 import History from './HistoryList'
 
@@ -32,18 +32,18 @@ class ServicePage extends Component {
     this.getChanges(props.service)
   }
 
-  onButtonToOpenAdminClicked = () => {
+  onButtonToOpenAdminClicked () {
     const { service, onRequestAdminPage } = this.props
     onRequestAdminPage(service.id)
   }
 
-  onButtonToStopServiceClicked = () => {
+  onButtonToStopServiceClicked () {
     const { service, onRequestStop, onRequestStart } = this.props
     const callback = service.state === 'running'? onRequestStop : onRequestStart
     callback(service.id)
   }
 
-  onButtonToOpenServiceClicked = () => {
+  onButtonToOpenServiceClicked () {
     const { service, onRequestServicePage } = this.props
     onRequestServicePage(service.id)
   }

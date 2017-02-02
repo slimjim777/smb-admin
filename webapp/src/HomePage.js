@@ -5,7 +5,7 @@ import Banner from './Banner/Banner'
 import {
   ContentWrapper,
   CardsList,
-} from 'toolkit'
+} from 'snapweb-toolkit'
 
 const publicUrl =  process.env.PUBLIC_URL
 
