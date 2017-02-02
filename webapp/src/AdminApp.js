@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './AdminApp.css'
 import api from './models/api'
+import constants from './models/constants'
 
 import 'toolkit/lib/bundle.css'
  
@@ -111,10 +112,10 @@ class App extends Component {
           id: srv.id,
           name: srv.name,
           description: srv.description,
-          action: srv.state,
+          action: srv.action,
           state: srv.state,
           image: srv.id,
-          adminPage: srv.adminPage,
+          adminPage: constants.baseUrl + srv.adminPage,
         }
       })
 

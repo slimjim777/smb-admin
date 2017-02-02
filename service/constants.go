@@ -58,6 +58,10 @@ var serviceKeys = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spree
 // serviceNames defines the snapped service names of the services
 var serviceNames = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}
 
-// serviceConfigure defines the URL to configure the service.
+// serviceAdmin defines the URL to configure the service.
 // The value is appended to protocol://domain_name
-var serviceConfigure = [...]string{"/index.php/settings/admin", ":8080", ":3000", "gogs", ":8084", "iredmail", "collabora"}
+var serviceAdmin = [...]string{"/index.php/settings/admin", ":8080", ":3000", "/gogs", ":8084", "/iredmail", "/collabora"}
+
+// servicePage is the end-user URL to access the service
+// The value is appended to protocol://domain_name
+var servicePage = [...]string{"/index.php", ":8080", ":3000", "/gogs", ":8084", "/iredmail", "/collabora"}

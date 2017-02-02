@@ -16,7 +16,7 @@
  */
 
 function getBaseURL() {
-    return location.protocol + '//' + location.hostname + ':8000';
+    return location.protocol + '//' + location.hostname;
 }
 
 var Constants = {

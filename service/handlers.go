@@ -120,7 +120,7 @@ func StatesHandler(w http.ResponseWriter, r *http.Request) {
 			currentAction = T("running")
 		}
 
-		state := ActiveState{ID: srv, Name: T(srv), Description: T(srv + "_desc"), State: currentState, Action: currentAction, Configure: serviceConfigure[index]}
+		state := ActiveState{ID: srv, Name: T(srv), Description: T(srv + "_desc"), State: currentState, Action: currentAction, AdminPage: serviceAdmin[index], ServicePage: servicePage[index]}
 		states = append(states, state)
 	}
 

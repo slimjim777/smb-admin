@@ -17,7 +17,7 @@
 import axios from 'axios'
 import constants from './constants'
 
-const API_VERSION = constants.baseUrl + '/v1/';
+const API_VERSION = '/v1/';
 
 var service = {
 
