@@ -35,7 +35,7 @@ import createHistory from 'history/createBrowserHistory'
 const publicUrl = process.env.PUBLIC_URL
 
 // @todo: Replace this url with the real snapweb link on the device
-const snapwebUrl = 'http://localhost:4200/'
+const snapwebUrl = constants.baseUrl + ':4200/'
 
 // @todo: Come up with a better admin profile name
 const defaultProfileName = 'Shawn Brannon' 
