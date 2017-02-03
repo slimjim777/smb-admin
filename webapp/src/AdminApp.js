@@ -153,7 +153,7 @@ class App extends Component {
   }
 
   onMenuItemClick(id) {
-    if (id === 'store') {
+    if (id === 'snapweb') {
       openNewTab(snapwebUrl)
     } 
     if (id === 'home') history.push('/')
@@ -238,7 +238,7 @@ class App extends Component {
       <div className='App'>
         <Header
           menuitems={[
-            { id: 'store', name: 'Store' },
+            { id: 'snapweb', name: 'Snapweb' },
           ]}
           currentSection={currentSection}
           onMenuItemClick={this.onMenuItemClick}
