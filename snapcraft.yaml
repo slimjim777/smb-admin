@@ -25,7 +25,7 @@ apps:
 parts:
     service:
         plugin: go
-        source: . git://github.com/ubuntu-core/smb-admin
+        source: git://github.com/ubuntu-core/smb-admin
         go-importpath: github.com/ubuntu-core/smb-admin
     assets:
         source: static
