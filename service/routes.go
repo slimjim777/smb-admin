@@ -29,8 +29,6 @@ import (
 // Environ contains the parsed config file settings.
 var Environ *Env
 
-var indexTemplate = "/index.html"
-
 // Page is the page details for the web application
 type Page struct {
 	Title string

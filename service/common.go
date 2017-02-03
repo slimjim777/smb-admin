@@ -54,3 +54,5 @@ type ErrorResponse struct {
 	StatusCode int    `json:"status-code"`
 	Result     string `json:"result"`
 }
+
+var indexTemplate = "/index.html"

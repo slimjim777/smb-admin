@@ -103,6 +103,21 @@ func TestIndexHandlerInvalidTemplate(t *testing.T) {
 	}
 }
 
+func TestIndexHandlerEndUser(t *testing.T) {
+	indexTemplate = "/index.html"
+	config := ConfigSettings{Version: "1.2.5", Interface: "user", DocRootUser: "../static/build-enduser"}
+	Environ = &Env{Config: config}
+
+	w := httptest.NewRecorder()
+	r, _ := http.NewRequest("GET", "/", nil)
+	UserRouter(Environ).ServeHTTP(w, r)
+
+	// Check the response
+	if w.Code != 200 {
+		t.Errorf("Error fetching the index page: %v", w.Code)
+	}
+}
+
 func TestStatesHandler(t *testing.T) {
 
 	config := ConfigSettings{Version: "1.2.5"}
