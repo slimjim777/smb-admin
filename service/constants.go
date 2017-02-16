@@ -44,7 +44,7 @@ const (
 	envPortUser     = "SMBADMIN_PORTUSER"
 )
 
-const version = "0.3"
+const version = "0.4"
 
 // The type of interface that will be shown
 const (
