@@ -44,7 +44,7 @@ const (
 	envPortUser     = "SMBADMIN_PORTUSER"
 )
 
-const version = "0.3"
+const version = "0.4"
 
 // The type of interface that will be shown
 const (
@@ -52,16 +52,16 @@ const (
 	InterfaceTypeUser  = "user"
 )
 
-// serviceKeys defines the key names of each of the services
-var serviceKeys = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spreedme", "iredmail", "collabora"}
+// serviceKeys defines the key names of each of the snaps
+var serviceKeys = [...]string{"nextcloud-nextant", "wekan-ondra", "rocketchat-server", "gogs", "spreed-webrtc-snap", "iredmail", "code"}
 
 // serviceNames defines the snapped service names of the services
-var serviceNames = [...]string{"nextcloud", "wekan", "rocketchat", "gogs", "spreed", "iredmail", "collabora"}
+var serviceNames = [...]string{"nextcloud", "wekan", "node", "gogs", "spreed", "iredmail", "loolwsd"}
 
 // serviceAdmin defines the URL to configure the service.
 // The value is appended to protocol://domain_name
-var serviceAdmin = [...]string{"/index.php/settings/admin", ":8080", ":3000", "/gogs", ":8084", "/iredmail", "/collabora"}
+var serviceAdmin = [...]string{"/index.php/settings/admin", ":8080", ":3000", ":3001", ":8084", "/iredmail", ":80"}
 
 // servicePage is the end-user URL to access the service
 // The value is appended to protocol://domain_name
-var servicePage = [...]string{"/index.php", ":8080", ":3000", "/gogs", ":8084", "/iredmail", "/collabora"}
+var servicePage = [...]string{"/index.php", ":8080", ":3000", ":3001", ":8084", "/iredmail", ":80"}
