@@ -6,3 +6,7 @@ tags
 coverage/
 node_modules/
 .env
+*.snap
+parts/
+prime/
+stage/
