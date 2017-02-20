@@ -41,7 +41,7 @@
     "translation": "Spreed"
   },
   {
-    "id": "iredmail",
+    "id": "mail-all-in-one",
     "translation": "iRedMail"
   },
   {
@@ -70,7 +70,7 @@
     "translation": "Spreed is a private video and chat messaging service based on WebRTC and is available through Nextcloud. The service brings you easy to use web conferencing, one to one calls, chat and is designed to give the enterprise full control of its communication."
   },
   {
-    "id": "iredmail_desc",
+    "id": "mail-all-in-one_desc",
     "translation": "iRedMail is the complete self-hosted, open source mail server solution for enterprises. With iRedMail, you can deploy a full feature mail server in several minutes."
   },
   {
