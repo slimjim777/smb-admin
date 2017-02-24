@@ -22,10 +22,10 @@ import constants from './models/constants'
 import 'snapweb-toolkit/lib/bundle.css'
  
 import {
-  Header,
   Footer,
 } from 'snapweb-toolkit'
 
+import Header from './Header/Header'
 import HomePage from './HomePage'
 
 import createHistory from 'history/createBrowserHistory'
@@ -134,15 +134,14 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <Header
-          menuitems={[
-          ]}
-          onMenuItemClick={this.onMenuItemClick}
-          name={brandData.name}
-          logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
-          customColor={brandData.color}
-          profilename={defaultProfileName}
-        />
+        <div className='App-header'>
+          <Header
+            hasBack={false}
+            hasSignIn={true}
+            signedIn={true}
+            profilename={defaultProfileName}
+          />
+        </div>
 
         <main className='App-content'>
           <HomePage
@@ -157,6 +156,8 @@ class App extends Component {
           firstLine={this.state.version}
           copyright={`© ${(new Date()).getFullYear()} ${brandData.name}`}
           logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
+          termsUrl={'http://www.ubuntu.com'}
+          link={'http://www.ubuntu.com'}
         />
       </div>
     )

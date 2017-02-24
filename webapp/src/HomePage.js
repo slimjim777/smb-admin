@@ -25,15 +25,35 @@ import {
 
 const publicUrl =  process.env.PUBLIC_URL
 
+const addCard = {
+  id: 'snapweb',
+  name: 'Get more apps',
+  action: 'Store',
+  image: 'add-snap',
+  iconUrl: `${publicUrl}/icons/cards/add-snap.png`,
+}
+
 export default function HomePage({
   bannerData,
   services,
   cardImgRootUrl,
   onOpenService,
+  hasAddCard,
 }) {
 
+const cards = [
+  ...services,
+]
+if (hasAddCard) cards.push(addCard)
+
   return (
-    <div>
+    <div 
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: 'calc(100vh - 65px)'
+    }}
+    >
       <ContentWrapper>
         <Banner
           photo={`${publicUrl}/brands/${bannerData.photo}`}
@@ -43,10 +63,14 @@ export default function HomePage({
           secondaryColor={bannerData.secondaryColor}
         />
       </ContentWrapper>
-      <ContentWrapper background bordered>
+      <ContentWrapper background bordered
+        style={{
+          flexGrow: '1',
+        }}
+      >
         <CardsList
           title='All Services'
-          cards={services}
+          cards={cards}
           cardImgRootUrl={cardImgRootUrl}
           onCardClick={onOpenService}
         />

@@ -23,10 +23,10 @@ import 'snapweb-toolkit/lib/bundle.css'
  
 import {
   If,
-  Header,
   Footer,
 } from 'snapweb-toolkit'
 
+import Header from './Header/Header'
 import HomePage from './HomePage'
 import ServicePage from './ServicePage'
 
@@ -46,6 +46,8 @@ const brandData = {
     name: 'Ubuntu',
     id: 'ubuntu',
     color: '#E95420',
+    link: 'http://www.ubuntu.com',
+    termsUrl: 'http://www.ubuntu.com', 
 }
 
 const bannerData = {
@@ -109,6 +111,7 @@ class App extends Component {
     history.listen(this.handleNavigation.bind(this))
 
     this.onMenuItemClick = this.onMenuItemClick.bind(this)
+    this.handleBackClick = this.handleBackClick.bind(this)
     this.onRequestStop = this.onRequestStop.bind(this)
     this.onRequestStart = this.onRequestStart.bind(this)
     this.onRequestAdminPage = this.onRequestAdminPage.bind(this)
@@ -158,9 +161,17 @@ class App extends Component {
     } 
     if (id === 'home') history.push('/')
   }
-
+  
+  handleBackClick() {
+    history.push('/')
+  }
+  
   onOpenService(id) {
-    history.push('/service/' + id)
+    if (id === 'snapweb') {
+      openNewTab(snapwebUrl)
+    } else {
+      history.push('/service/' + id)
+    }
   }
 
   onRequestStop(id) {
@@ -235,19 +246,18 @@ class App extends Component {
     const cardImgRootUrl = `${publicUrl}/icons/cards/`
 
     return (
-      <div className='App'>
-        <Header
-          menuitems={[
-            { id: 'snapweb', name: 'Snapweb' },
-          ]}
-          currentSection={currentSection}
-          onMenuItemClick={this.onMenuItemClick}
-          name={brandData.name}
-          logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
-          customColor={brandData.color}
-          profilename={defaultProfileName}
-        />
-
+      <div className='App-container'>
+        <div className='App-header'>
+          <Header
+            hasBack={currentSection === 'service'}
+            hasSignIn={currentSection === 'home'}
+            signedIn={true}
+            onMenuItemClick={this.handleMenuItemClick}
+            onProfileClick={this.handleProfileClick}
+            onBackClick={this.handleBackClick}
+            profilename={defaultProfileName}
+          />
+        </div>
         <main className='App-content'>
           <If cond={currentSection === 'home'}>
             <HomePage
@@ -255,6 +265,7 @@ class App extends Component {
               cardImgRootUrl={cardImgRootUrl}
               services={installedServices}
               onOpenService={this.onOpenService}
+              hasAddCard={true}
             />
           </If>
           <If cond={currentSection === 'service' && installedServices.length > 0}>
@@ -278,6 +289,8 @@ class App extends Component {
           firstLine={this.state.version}
           copyright={`© ${(new Date()).getFullYear()} ${brandData.name}`}
           logo={`${publicUrl}/brands/${brandData.id}/logo.png`}
+          termsUrl={brandData.termsUrl}
+          link={brandData.link}
         />
       </div>
     )
