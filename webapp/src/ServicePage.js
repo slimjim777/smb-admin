@@ -156,7 +156,7 @@ class ServicePage extends Component {
     return (
       <div className='ServicePage'>
 
-        <ContentWrapper background>
+        <ContentWrapper>
           <div className='ServicePage-header'>
 
             <div className='ServicePage-headerParts'>
@@ -198,7 +198,7 @@ class ServicePage extends Component {
           </div>
         </ContentWrapper>
 
-        <ContentWrapper>
+        <ContentWrapper background bordered>
             <div className='ServicePage-content'>
 
               <div>
